@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Beautiful Places - Wah Cantt Coaster Tour{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/pages-public.css' %}?v=1.1">
+{% endblock %}
+
+{% block content %}
+    <section class="places-page-hero page-banner" style="background-image: url('{% static 'images/hero_bg.png' %}');">
+        <div class="container page-banner-content">
+            <div class="badge-explore" style="margin-bottom: 16px;">
+                <i class="fa-solid fa-camera"></i> Discover Wah Cantt
+            </div>
+            <h1>Beautiful Places</h1>
+            <p class="hero-lead">Explore parks, museums, dams, and markets — book a coaster tour to any destination below.</p>
+            <div class="breadcrumbs">
+                <a href="{% url 'home' %}">Home</a> &nbsp;&gt;&nbsp; <span>Beautiful Places</span>
+            </div>
+            <div class="places-hero-stats">
+                <div class="places-hero-stat">
+                    <strong>{{ tours|length }}</strong>
+                    <span>Places</span>
+                </div>
+                <div class="places-hero-stat">
+                    <strong>{{ categories|length }}</strong>
+                    <span>Categories</span>
+                </div>
+                <div class="places-hero-stat">
+                    <strong>PKR</strong>
+                    <span>Per Seat Pricing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="places-section section">
+        <div class="container">
+            <div class="places-toolbar">
+                <div class="places-toolbar-row">
+                    <div class="places-search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" id="placesSearchInput" class="places-search-input" placeholder="Search by name or location…" autocomplete="off">
+                    </div>
+                    <p class="places-results-count" id="placesResultsCount">
+                        Showing <strong>{{ tours|length }}</strong> place{{ tours|length|pluralize }}
+                    </p>
+                </div>
+                <div class="filter-tabs" role="tablist">
+                    <button type="button" class="filter-tab active" data-filter="all">All Places</button>
+                    {% for cat in categories %}
+                        <button type="button" class="filter-tab" data-filter="{{ cat }}">{{ cat }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="places-grid" id="placesRealGrid">
+                {% for tour in tours %}
+                    <article class="place-card" data-category="{{ tour.category|escape }}">
+                        <div class="place-img-wrapper">
+                            <img src="{% static tour.image %}" alt="{{ tour.name }}" class="place-img" loading="lazy">
+                            <span class="place-tag">{{ tour.category }}</span>
+                        </div>
+                        <div class="place-info">
+                            <h3 class="place-title">{{ tour.name }}</h3>
+                            <div class="place-location">
+                                <i class="fa-solid fa-location-dot text-green"></i> {{ tour.location }}
+                            </div>
+                            <p class="place-desc">{{ tour.description }}</p>
+                            <div class="place-footer">
+                                <div class="place-rating">
+                                    <i class="fa-solid fa-star"></i> {{ tour.rating }}
+                                    <span style="font-size: 12px; color: #94a3b8; font-weight: 400;">({{ tour.reviews_count }} reviews)</span>
+                                </div>
+                                <div class="place-price">
+                                    <strong>PKR {{ tour.price_per_seat|floatformat:0 }}</strong> / seat
+                                </div>
+                                <div class="coaster-availability" data-tour-id="{{ tour.id }}">
+                                    Coasters available: <span class="coaster-count">—</span>
+                                </div>
+                            </div>
+                            <a href="{% url 'booking' %}?tour_id={{ tour.id }}" class="btn btn-orange" style="width: 100%; padding: 12px; font-size: 14px; border-radius: 10px; margin-top: 18px;">
+                                <i class="fa-solid fa-ticket"></i> Book This Tour
+                            </a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <p class="text-center" style="grid-column: 1 / -1; color: #64748b; padding: 60px 20px; font-size: 16px;">
+                        <i class="fa-solid fa-map" style="font-size: 40px; display: block; margin-bottom: 16px; opacity: 0.4;"></i>
+                        No places found. Please check back later.
+                    </p>
+                {% endfor %}
+            </div>
+
+            <div class="places-empty-filter" id="placesEmptyFilter">
+                <i class="fa-solid fa-face-frown" style="font-size: 48px; opacity: 0.35; display: block; margin-bottom: 16px;"></i>
+                <p style="font-size: 16px; margin-bottom: 8px;">No places match your search.</p>
+                <button type="button" class="btn btn-primary" id="clearPlacesFilter" style="margin-top: 12px; padding: 10px 24px;">Show all places</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-cta">
+        <div class="container">
+            <h2>Found Your Favourite Spot?</h2>
+            <p>Reserve your seats now — pick date, passengers, and pickup location on the booking page.</p>
+            <a href="{% url 'booking' %}" class="btn">Go to Booking <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+{% endblock %}

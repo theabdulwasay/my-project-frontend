@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Wah Cantt Coaster Tour{% endblock %}
+
+{% block content %}
+    <!-- Page Banner -->
+    <section class="page-banner" style="background-image: url('{% static 'images/hero_bg.png' %}');">
+        <div class="container page-banner-content">
+            <h1>About Us</h1>
+            <div class="breadcrumbs">
+                <a href="{% url 'home' %}">Home</a> &nbsp;&gt;&nbsp; <span>About Us</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Info Section -->
+    <section class="section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img-container">
+                    <img src="{% static 'images/about_landmark.png' %}" alt="Wah Cantt Landmark" class="about-img">
+                    <div class="about-badge">
+                        <h2>5+</h2>
+                        <p>Years of<br>Experience</p>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2 class="text-dark">We Provide Best Travel Experience In Wah Cantt</h2>
+                    <p>Wah Cantt Coaster Tour is your trusted travel partner. We offer safe, comfortable, and affordable coaster services to explore the beautiful historical and scenic places in and around Wah Cantt.</p>
+                    
+                    <div class="about-bullets">
+                        <div class="bullet-item">
+                            <i class="fa-solid fa-circle-check bullet-icon"></i> Experienced Drivers
+                        </div>
+                        <div class="bullet-item">
+                            <i class="fa-solid fa-circle-check bullet-icon"></i> Comfortable Coasters
+                        </div>
+                        <div class="bullet-item">
+                            <i class="fa-solid fa-circle-check bullet-icon"></i> Affordable Packages
+                        </div>
+                        <div class="bullet-item">
+                            <i class="fa-solid fa-circle-check bullet-icon"></i> Customer Satisfaction
+                        </div>
+                    </div>
+                    
+                    <a href="{% url 'booking' %}" class="btn btn-orange">Book Your Tour Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-num">5000+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div>
+                    <div class="stat-num">50+</div>
+                    <div class="stat-label">Tour Packages</div>
+                </div>
+                <div>
+                    <div class="stat-num">20+</div>
+                    <div class="stat-label">Coasters</div>
+                </div>
+                <div>
+                    <div class="stat-num">10+</div>
+                    <div class="stat-label">Tourist Places</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="section">
+        <div class="container">
+            <div class="about-grid" style="align-items: stretch;">
+                <div class="feature-box" style="text-align: left; background: var(--bg-white); border: 1px solid #e2e8f0; border-radius: var(--border-radius-lg); padding: 40px; box-shadow: var(--card-shadow);">
+                    <div class="feature-icon" style="color: var(--accent-orange);"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3 class="feature-title" style="font-size: 22px; color: var(--text-dark); margin-bottom: 15px;">Our Mission</h3>
+                    <p style="color: #475569;">Our mission is to boost local tourism in Wah Cantt by providing highly reliable, safe, and comfortable coaster rental and tour packages. We strive to connect travelers with historical sites like Taxila Museum and natural beauties like Khanpur Dam seamlessly.</p>
+                </div>
+                <div class="feature-box" style="text-align: left; background: var(--bg-white); border: 1px solid #e2e8f0; border-radius: var(--border-radius-lg); padding: 40px; box-shadow: var(--card-shadow);">
+                    <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
+                    <h3 class="feature-title" style="font-size: 22px; color: var(--text-dark); margin-bottom: 15px;">Our Vision</h3>
+                    <p style="color: #475569;">To become the leading travel and coaster transport solution in the region, recognized for our commitment to passenger comfort, safety standards, transparent pricing, and promoting Pakistan's rich historical heritage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Wah Cantt Coaster Tour</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.5">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <!-- Shared Sidebar -->
+        <aside class="sidebar">
+            <a href="{% url 'home' %}" class="sidebar-brand">
+                <i class="fa-solid fa-bus text-green"></i> WCT
+            </a>
+
+            <div class="sidebar-menu">
+                <a href="#overview" class="sidebar-link active" id="link-overview"><i class="fa-solid fa-chart-line"></i> Overview</a>
+                {% if user.is_admin %}
+                    <a href="#bookings" class="sidebar-link" id="link-bookings"><i class="fa-solid fa-list-check"></i> Bookings</a>
+                    <a href="#tours" class="sidebar-link" id="link-tours"><i class="fa-solid fa-map-location-dot"></i> Tours</a>
+                    <a href="#coasters" class="sidebar-link" id="link-coasters"><i class="fa-solid fa-bus"></i> Coasters</a>
+                    <a href="#users" class="sidebar-link" id="link-users"><i class="fa-solid fa-users"></i> Users</a>
+                {% else %}
+                    <a href="#bookings" class="sidebar-link" id="link-bookings"><i class="fa-solid fa-ticket"></i> My Bookings</a>
+                    <a href="#profile" class="sidebar-link" id="link-profile"><i class="fa-solid fa-user-gear"></i> Profile</a>
+                {% endif %}
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="{% url 'logout' %}" class="sidebar-link" style="color:#e74c3c;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <div>
+                    <h1 style="font-size:28px; color:var(--primary-dark);">{% if user.is_admin %}Admin Dashboard{% else %}Customer Dashboard{% endif %}</h1>
+                    <p style="color:#64748b; font-size:14px; margin-top:4px;">{% if user.is_admin %}Management overview & system controls{% else %}Enjoy your journey with Wah Cantt Coaster Tour{% endif %}</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <div class="user-profile-badge">
+                        <div class="avatar-sm">{{ user.first_name|slice":1"|default:user.email|slice:":1"|upper }}</div>
+                        <span style="font-weight:600; font-size:14px; color:var(--primary-dark);">{{ user.email }}{% if user.is_admin %} (Admin){% endif %}</span>
+                    </div>
+                    <a href="{% url 'logout' %}" class="btn btn-outline" style="padding:8px 12px; border-radius:10px; color:#e74c3c; border-color: rgba(231,76,60,0.12);">Logout <i class="fa-solid fa-right-from-bracket" style="margin-left:8px;"></i></a>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="padding:14px; margin-bottom:16px; border-radius:var(--border-radius); background:#def7ec; color:#03543f; border:1px solid #bcf0da; font-weight:500;">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Overview / Stats -->
+            <div id="section-overview" class="dashboard-section">
+                <div class="stats-row">
+                    <div class="stat-card"><div class="stat-card-info"><h4>Total Users</h4><h2>{{ total_users|default:0 }}</h2></div><div class="stat-card-icon"><i class="fa-solid fa-users"></i></div></div>
+                    <div class="stat-card"><div class="stat-card-info"><h4>Total Bookings</h4><h2>{{ total_bookings|default:0 }}</h2></div><div class="stat-card-icon"><i class="fa-solid fa-ticket"></i></div></div>
+                    <div class="stat-card"><div class="stat-card-info"><h4>Active Tours</h4><h2>{{ total_tours|default:0 }}</h2></div><div class="stat-card-icon"><i class="fa-solid fa-map-location-dot"></i></div></div>
+                    <div class="stat-card"><div class="stat-card-info"><h4>Total Revenue</h4><h2>PKR {{ total_revenue|default:0 }}</h2></div><div class="stat-card-icon"><i class="fa-solid fa-sack-dollar"></i></div></div>
+                </div>
+
+                {% if user.is_admin %}
+                    <!-- Admin recent bookings table -->
+                    <div class="table-card" style="margin-top:18px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;"><h3 style="margin:0;">Recent Bookings</h3><a href="#bookings" class="text-orange" onclick="document.getElementById('link-bookings').click();">View All</a></div>
+                        <div class="table-responsive"><table class="data-table"><thead><tr><th>Booking ID</th><th>Customer</th><th>Tour</th><th>Date</th><th>Seats</th><th>Amount</th><th>Status</th></tr></thead><tbody>{% for booking in bookings|slice:":8" %}<tr><td>#WCT-{{ booking.id }}</td><td>{{ booking.customer.first_name }}<div style="font-size:12px;color:#64748b;">{{ booking.customer.email }}</div></td><td>{{ booking.tour.name }}</td><td>{{ booking.date|date:"d M Y" }}</td><td>{{ booking.seats }}</td><td>PKR {{ booking.total_price|floatformat:0 }}</td><td><span class="badge {% if booking.status=='Pending' %}badge-pending{% elif booking.status=='Confirmed' %}badge-confirmed{% else %}badge-cancelled{% endif %}">{{ booking.status }}</span></td></tr>{% empty %}<tr><td colspan="7" class="text-center" style="color:#64748b; padding:20px;">No bookings yet.</td></tr>{% endfor %}</tbody></table></div>
+                    </div>
+                {% else %}
+                    <!-- Customer recent bookings & review form -->
+                    <div class="table-card" style="margin-top:18px;"><h3 style="margin:0 0 12px 0;">Recent Bookings</h3><div class="table-responsive"><table class="data-table"><thead><tr><th>Booking ID</th><th>Tour</th><th>Date</th><th>Seats</th><th>Amount</th><th>Status</th></tr></thead><tbody>{% for booking in bookings %}<tr><td>#WCT-{{ booking.id }}</td><td>{{ booking.tour.name }}</td><td>{{ booking.date|date:"d M Y" }}</td><td>{{ booking.seats }}</td><td>PKR {{ booking.total_price|floatformat:0 }}</td><td><span class="badge {% if booking.status=='Pending' %}badge-pending{% elif booking.status=='Confirmed' %}badge-confirmed{% else %}badge-cancelled{% endif %}">{{ booking.status }}</span></td></tr>{% empty %}<tr><td colspan="6" class="text-center" style="color:#64748b; padding:20px;">You haven't made any bookings yet.</td></tr>{% endfor %}</tbody></table></div></div>
+
+                    <div class="review-form glass-card" style="margin-top:22px;">
+                        <h3 style="margin-bottom:12px;">Leave a Review</h3>
+                        <form id="reviewForm">
+                            <div class="form-group"><label for="reviewTour">Select Tour</label><select id="reviewTour" class="form-control"><option value="">Choose a tour</option>{% for tour in tours %}<option value="{{ tour.id }}">{{ tour.name }}</option>{% endfor %}</select></div>
+                            <div class="form-group"><label for="reviewRating">Rating</label><select id="reviewRating" class="form-control"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+                            <div class="form-group"><label for="reviewComment">Review</label><textarea id="reviewComment" class="form-control" rows="3"></textarea></div>
+                            <div id="reviewFeedback" class="review-feedback" style="display:none; margin-bottom:10px;"></div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if user.is_admin %}
+                <!-- Admin: Coasters / Tours / Users sections (links from sidebar) -->
+                <div id="section-coasters" class="dashboard-section" style="display:none; margin-top:18px;">
+                    <div class="table-card"><h3 style="margin:0 0 12px 0;">Coaster Fleet</h3><div class="table-responsive"><table class="data-table"><thead><tr><th>Name</th><th>Plate</th><th>Capacity</th><th>Available</th></tr></thead><tbody>{% for c in coasters %}<tr><td>{{ c.name }}</td><td>{{ c.plate_number }}</td><td>{{ c.capacity }}</td><td>{% if c.is_available %}<span class="badge badge-confirmed">Yes</span>{% else %}<span class="badge badge-pending">No</span>{% endif %}</td></tr>{% empty %}<tr><td colspan="4" class="text-center">No coasters defined yet.</td></tr>{% endfor %}</tbody></table></div></div>
+                </div>
+            {% endif %}
+
+            <!-- Bookings / Profile sections for customer also available via JS toggle -->
+            <div id="section-bookings" class="dashboard-section" style="display:none; margin-top:18px;"></div>
+            <div id="section-profile" class="dashboard-section" style="display:none; margin-top:18px;"></div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // basic GSAP entrance
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.sidebar', { x:-60, opacity:0, duration:0.8 });
+                gsap.from('.dashboard-header', { y:-20, opacity:0, duration:0.6, delay:0.1 });
+            }
+
+            const links = document.querySelectorAll('.sidebar-link');
+            const sections = {
+                overview: document.getElementById('section-overview'),
+                bookings: document.getElementById('section-bookings'),
+                profile: document.getElementById('section-profile'),
+                coasters: document.getElementById('section-coasters'),
+                tours: document.getElementById('section-tours'),
+                users: document.getElementById('section-users')
+            };
+
+            function showSection(key){
+                for (const s in sections) { if (sections[s]) sections[s].style.display = 'none'; }
+                if (sections[key]) sections[key].style.display = 'block';
+                links.forEach(l=>l.classList.remove('active'));
+                document.querySelectorAll('.sidebar-link').forEach(a=>{ if (a.getAttribute('href')===('#'+key)) a.classList.add('active'); });
+            }
+
+            document.querySelectorAll('.sidebar-link').forEach(a=>{
+                a.addEventListener('click', function(e){ e.preventDefault(); const href = this.getAttribute('href').substring(1); showSection(href); });
+            });
+
+            // default show overview
+            showSection('overview');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book Your Tour - Wah Cantt Coaster Tour{% endblock %}
+
+{% block content %}
+    <!-- Page Banner -->
+    <section class="page-banner" style="background-image: url('{% static 'images/hero_bg.png' %}');">
+        <div class="container page-banner-content">
+            <h1>Book Your Tour</h1>
+            <div class="breadcrumbs">
+                <a href="{% url 'home' %}">Home</a> &nbsp;&gt;&nbsp; <span>Booking</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Details Section -->
+    <section class="section">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="padding: 16px; margin-bottom: 24px; border-radius: var(--border-radius); background: {% if message.tags == 'error' %}#fde8e8; color: #e74c3c; border: 1px solid #fbd5d5{% else %}#def7ec; color: #03543f; border: 1px solid #bcf0da{% endif %}; font-weight: 500;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div style="background: rgba(16, 185, 129, 0.08); border: 2px solid var(--accent-green); padding: 20px; border-radius: var(--border-radius); margin-bottom: 30px; text-align: center;">
+                <p style="font-weight: 600; color: var(--text-dark); margin-bottom: 8px;;">📞 For Quick Booking</p>
+                <p style="color: var(--accent-green); font-size: 18px; font-weight: 700; margin: 0;">0334-1944963 / 0313-9071373</p>
+            </div>
+
+            <div class="booking-grid">
+                <!-- Booking Form Column -->
+                <div class="booking-card">
+                    <h2 style="font-size: 26px; color: var(--text-dark); margin-bottom: 24px;">Book Your Coaster</h2>
+                    
+                    {% if not user.is_authenticated %}
+                        <div style="background: rgba(230, 126, 34, 0.08); border: 1px dashed var(--accent-orange); padding: 20px; border-radius: var(--border-radius); margin-bottom: 30px; text-align: center;">
+                            <p style="font-weight: 600; color: var(--text-dark);">You are not logged in!</p>
+                            <p style="color: #64748b; font-size: 14px; margin-bottom: 15px; margin-top: 5px;">You need to log in or create an account to complete a booking.</p>
+                            <a href="{% url 'login' %}?next={% url 'booking' %}" class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;">Log In Now</a>
+                        </div>
+                    {% endif %}
+
+                    <form action="{% url 'booking' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="id_tour">Select Tour / Place</label>
+                            <select name="tour" id="id_tour" class="form-control" {% if not user.is_authenticated %}disabled{% endif %} required>
+                                <option value="">Select Tour</option>
+                                {% for tour in tours %}
+                                    <option value="{{ tour.id }}" 
+                                            data-price="{{ tour.price_per_seat }}" 
+                                            data-image="{% static tour.image %}" 
+                                            data-duration="{{ tour.duration }}"
+                                            {% if selected_tour_id == tour.id %}selected{% endif %}>
+                                        {{ tour.name }} (PKR {{ tour.price_per_seat|floatformat:0 }} / seat)
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_date">Select Date</label>
+                            <input type="date" name="date" id="id_date" class="form-control" min="2026-05-26" value="{{ selected_date }}" {% if not user.is_authenticated %}disabled{% endif %} required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_seats">Number of Seats</label>
+                            <input type="number" name="seats" id="id_seats" class="form-control" min="1" max="20" value="{{ selected_seats|default:1 }}" {% if not user.is_authenticated %}disabled{% endif %} required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_pickup">Pickup Location</label>
+                            <select name="pickup_location" id="id_pickup" class="form-control" {% if not user.is_authenticated %}disabled{% endif %} required>
+                                <option value="Wah Cantt Bus Terminal">Wah Cantt Bus Terminal</option>
+                                <option value="Mall of Wah Main Entrance">Mall of Wah Main Entrance</option>
+                                <option value="Lalarukh Chowk">Lalarukh Chowk</option>
+                                <option value="Barrier No. 3 Intersection">Barrier No. 3 Intersection</option>
+                                <option value="Taxila bypass Chowk">Taxila bypass Chowk</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_coaster">Select Coaster (optional)</label>
+                            <select name="coaster" id="id_coaster" class="form-control" {% if not user.is_authenticated %}disabled{% endif %}>
+                                <option value="">Any Available Coaster</option>
+                                {% for coaster in coasters %}
+                                    <option value="{{ coaster.id }}">{{ coaster.name }}{% if coaster.plate_number %} - {{ coaster.plate_number }}{% endif %} (Capacity: {{ coaster.capacity }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 30px;">
+                            <label>Payment Method</label>
+                            <div style="display: flex; gap: 30px; margin-top: 10px;">
+                                <label class="checkbox-label" style="text-transform: none; font-weight: 500;">
+                                    <input type="radio" name="payment_method" value="Cash on Board" checked {% if not user.is_authenticated %}disabled{% endif %}> Cash on Board
+                                </label>
+                                <label class="checkbox-label" style="text-transform: none; font-weight: 500;">
+                                    <input type="radio" name="payment_method" value="Online Payment" {% if not user.is_authenticated %}disabled{% endif %}> Online Payment
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-auth-submit" {% if not user.is_authenticated %}disabled style="opacity: 0.6; cursor: not-allowed;"{% endif %}>
+                            <i class="fa-solid fa-square-check"></i> Confirm Booking
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Booking Summary Column -->
+                <div class="booking-summary-card">
+                    <h3 class="summary-title">Tour Summary</h3>
+                    
+                    <img id="summary-tour-img" src="{% static 'images/wah_gardens.png' %}" alt="Tour" class="summary-img">
+                    
+                    <h4 id="summary-tour-name" style="font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--accent-green);">Wah Gardens Tour</h4>
+                    
+                    <div class="summary-item">
+                        <span>Duration:</span>
+                        <strong id="summary-tour-duration" class="text-white">1 Day</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Price per Seat:</span>
+                        <strong id="summary-tour-price" class="text-white">PKR 1,000</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Seats booked:</span>
+                        <strong id="summary-seats-count" class="text-white">1</strong>
+                    </div>
+                    
+                    <div class="summary-item total">
+                        <span>Total Price</span>
+                        <strong id="summary-total-price">PKR 1,000</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Wah Cantt Coaster Tour{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/pages-public.css' %}?v=2.0">
+{% endblock %}
+
+{% block content %}
+<div class="home-page">
+    <!-- Hero -->
+    <section class="home-simple-hero" style="background-image: url('{% static 'images/hero_bg.png' %}');">
+        <div class="home-simple-hero-overlay"></div>
+        <div class="container home-simple-hero-inner">
+            <p class="home-simple-label"><i class="fa-solid fa-bus"></i> Wah Cantt Coaster Tour</p>
+            <h1>Explore beautiful places.<br><span>Book your ride.</span></h1>
+            <p class="home-simple-lead">Comfortable coasters to Wah Gardens, Taxila, Khanpur Dam &amp; more — easy online booking.</p>
+            <div class="home-simple-actions">
+                <a href="{% url 'booking' %}" class="home-btn home-btn-primary">Book a Tour</a>
+                <a href="{% url 'beautiful_places' %}" class="home-btn home-btn-ghost">View Places</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick book -->
+    <section class="home-simple-book">
+        <div class="container">
+            <form action="{% url 'booking' %}" method="GET" class="home-book-form">
+                <div class="home-book-field">
+                    <label for="homeTour">Where to go?</label>
+                    <select name="tour_id" id="homeTour" class="home-book-input">
+                        <option value="">Choose destination</option>
+                        {% for tour in tours %}
+                            <option value="{{ tour.id }}">{{ tour.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="home-book-field">
+                    <label for="homeTravelDate">When?</label>
+                    <input type="date" name="date" id="homeTravelDate" class="home-book-input">
+                </div>
+                <div class="home-book-field home-book-field-sm">
+                    <label for="homeSeats">Seats</label>
+                    <select name="seats" id="homeSeats" class="home-book-input">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+                <button type="submit" class="home-btn home-btn-primary home-book-submit">
+                    Search <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Popular places -->
+    <section class="home-simple-places">
+        <div class="container">
+            <div class="home-simple-head">
+                <h2>Popular destinations</h2>
+                <a href="{% url 'beautiful_places' %}" class="home-link-all">See all <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="home-places-grid">
+                {% for tour in featured_tours|slice:":6" %}
+                    <a href="{% url 'booking' %}?tour_id={{ tour.id }}" class="home-place-card">
+                        <div class="home-place-img">
+                            <img src="{% static tour.image %}" alt="{{ tour.name }}" loading="lazy">
+                            <span class="home-place-tag">{{ tour.category }}</span>
+                        </div>
+                        <div class="home-place-body">
+                            <h3>{{ tour.name }}</h3>
+                            <p class="home-place-loc"><i class="fa-solid fa-location-dot"></i> {{ tour.location }}</p>
+                            <p class="home-place-price">PKR {{ tour.price_per_seat|floatformat:0 }} <span>/ seat</span></p>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p class="home-empty">No tours available yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="home-simple-trust">
+        <div class="container home-trust-row">
+            <div class="home-trust-item">
+                <i class="fa-solid fa-bus"></i>
+                <span>Comfortable coasters</span>
+            </div>
+            <div class="home-trust-item">
+                <i class="fa-solid fa-tag"></i>
+                <span>Clear pricing</span>
+            </div>
+            <div class="home-trust-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Safe &amp; reliable</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="home-simple-reviews">
+        <div class="container">
+            <h2 class="home-simple-head-center">What travellers say</h2>
+            <div class="home-reviews-row" id="reviewCards">
+                <div class="home-review-card">
+                    <div class="home-review-stars">★★★★★</div>
+                    <p>Excellent tour — comfortable coaster and very helpful service.</p>
+                    <span>— Happy customer</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="home-simple-cta">
+        <div class="container">
+            <h2>Ready for your trip?</h2>
+            <a href="{% url 'booking' %}" class="home-btn home-btn-dark">Book now</a>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('homeTravelDate');
+        if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+    });
+</script>
+{% endblock %}
