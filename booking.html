@@ -1,53 +1,190 @@
-{% extends 'index.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Tour - Wah Cantt Coaster Tour</title>
+    
+    <!-- CSS links -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css?v=1.8">
+    <link rel="stylesheet" href="/css/pages-public.css?v=2.0">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-{% block title %}Book Your Tour - Wah Cantt Coaster Tour{% endblock %}
-
-{% block content %}
-    <!-- Page Banner -->
-    <section class="page-banner" style="background-image: url('{% static 'images/hero_bg.png' %}');">
-        <div class="container page-banner-content">
-            <h1>Book Your Tour</h1>
-            <div class="breadcrumbs">
-                <a href="{% url 'home' %}">Home</a> &nbsp;&gt;&nbsp; <span>Booking</span>
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo text-white">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="logo-text">
+                    Wah Cantt
+                    <span class="logo-subtitle">Coaster Tour</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/beautiful_places.html" class="nav-link">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link active">Booking</a>
+                <a href="/about.html" class="nav-link">About Us</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="tel:+923000000000" class="contact-phone">
+                    <i class="fa-solid fa-phone text-green"></i>
+                    <span>+92-300-0000000</span>
+                </a>
+                <a href="/login.html" class="btn-auth">
+                    <i class="fa-solid fa-user"></i> Login
+                </a>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Booking Details Section -->
-    <section class="section">
-        <div class="container">
-            {% if messages %}
-                {% for message in messages %}
-                    <div style="padding: 16px; margin-bottom: 24px; border-radius: var(--border-radius); background: {% if message.tags == 'error' %}#fde8e8; color: #e74c3c; border: 1px solid #fbd5d5{% else %}#def7ec; color: #03543f; border: 1px solid #bcf0da{% endif %}; font-weight: 500;">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-            <div style="background: rgba(16, 185, 129, 0.08); border: 2px solid var(--accent-green); padding: 20px; border-radius: var(--border-radius); margin-bottom: 30px; text-align: center;">
-                <p style="font-weight: 600; color: var(--text-dark); margin-bottom: 8px;;">📞 For Quick Booking</p>
-                <p style="color: var(--accent-green); font-size: 18px; font-weight: 700; margin: 0;">0334-1944963 / 0313-9071373</p>
+    <main>
+        <!-- Page Header -->
+        <section style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%); color: white; padding: 80px 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: 2.5em; margin-bottom: 20px;">Book Your Tour</h1>
             </div>
+        </section>
 
-            <div class="booking-grid">
-                <!-- Booking Form Column -->
-                <div class="booking-card">
-                    <h2 style="font-size: 26px; color: var(--text-dark); margin-bottom: 24px;">Book Your Coaster</h2>
+        <!-- Booking Section -->
+        <section style="padding: 60px 0; background: var(--bg-light);">
+            <div class="container">
+                <!-- Info Box -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 2px solid var(--accent-green); padding: 20px; border-radius: var(--border-radius); margin-bottom: 40px; text-align: center;">
+                    <p style="font-weight: 600; color: var(--text-dark); margin-bottom: 8px;"><i class="fa-solid fa-phone"></i> Quick Booking</p>
+                    <p style="color: var(--accent-green); font-size: 1.2em; font-weight: 700;">0334-1944963 / 0313-9071373</p>
+                </div>
+
+                <!-- Booking Form -->
+                <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow);">
+                    <h2 style="font-size: 1.8em; margin-bottom: 30px; color: var(--text-dark);">Book Your Coaster</h2>
                     
-                    {% if not user.is_authenticated %}
-                        <div style="background: rgba(230, 126, 34, 0.08); border: 1px dashed var(--accent-orange); padding: 20px; border-radius: var(--border-radius); margin-bottom: 30px; text-align: center;">
-                            <p style="font-weight: 600; color: var(--text-dark);">You are not logged in!</p>
-                            <p style="color: #64748b; font-size: 14px; margin-bottom: 15px; margin-top: 5px;">You need to log in or create an account to complete a booking.</p>
-                            <a href="{% url 'login' %}?next={% url 'booking' %}" class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;">Log In Now</a>
+                    <form onsubmit="handleBooking(event)">
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Select Destination</label>
+                            <select name="tour" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                                <option value="">Choose a destination...</option>
+                                <option value="1">Wah Gardens - PKR 500</option>
+                                <option value="2">Taxila - PKR 800</option>
+                                <option value="3">Khanpur Dam - PKR 900</option>
+                                <option value="4">Hunza Valley - PKR 2500</option>
+                                <option value="5">Swat Valley - PKR 3000</option>
+                                <option value="6">Ayubia - PKR 1200</option>
+                            </select>
                         </div>
-                    {% endif %}
 
-                    <form action="{% url 'booking' %}" method="POST">
-                        {% csrf_token %}
-                        
-                        <div class="form-group">
-                            <label for="id_tour">Select Tour / Place</label>
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Travel Date</label>
+                            <input type="date" name="date" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Number of Seats</label>
+                            <select name="seats" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                                <option value="1">1 Seat</option>
+                                <option value="2">2 Seats</option>
+                                <option value="3">3 Seats</option>
+                                <option value="4">4 Seats</option>
+                                <option value="5">5+ Seats</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Your Name</label>
+                            <input type="text" name="name" placeholder="Full name" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Phone Number</label>
+                            <input type="tel" name="phone" placeholder="0300-0000000" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Email</label>
+                            <input type="email" name="email" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <button type="submit" class="home-btn home-btn-primary" style="width: 100%; padding: 14px; font-size: 1.1em; margin-top: 10px;">
+                            <i class="fa-solid fa-calendar-check"></i> Complete Booking
+                        </button>
+                    </form>
+
+                    <p style="text-align: center; color: var(--text-slate); margin-top: 20px; font-size: 0.9em;">
+                        You will receive confirmation on your phone and email.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col-about">
+                    <a href="/" class="logo text-white footer-logo">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-bus"></i>
+                        </div>
+                        <div class="logo-text">
+                            Wah Cantt
+                            <span class="logo-subtitle">Coaster Tour</span>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Places</a></li>
+                        <li><a href="/booking.html">Book</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <ul class="footer-links" style="color: var(--text-slate);">
+                        <li><i class="fa-solid fa-phone text-green"></i> 0334-1944963</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wah Cantt Coaster Tour.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script defer src="/js/main.js?v=1.7"></script>
+    <script>
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                links.forEach(link => {
+                    link.href = link.href.split('?')[0] + '?v=' + Date.now();
+                });
+            }
+        });
+
+        function handleBooking(e) {
+            e.preventDefault();
+            alert('Thank you for booking! Please call us to confirm: 0334-1944963');
+            setTimeout(() => window.location.href = '/', 2000);
+        }
+    </script>
+</body>
+</html>
                             <select name="tour" id="id_tour" class="form-control" {% if not user.is_authenticated %}disabled{% endif %} required>
                                 <option value="">Select Tour</option>
                                 {% for tour in tours %}

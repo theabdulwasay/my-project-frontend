@@ -1,53 +1,185 @@
-{% extends 'index.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Wah Cantt Coaster Tour</title>
+    
+    <!-- CSS links -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css?v=1.8">
+    <link rel="stylesheet" href="/css/pages-public.css?v=2.0">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-{% block title %}About Us - Wah Cantt Coaster Tour{% endblock %}
-
-{% block content %}
-    <!-- Page Banner -->
-    <section class="page-banner" style="background-image: url('{% static 'images/hero_bg.png' %}');">
-        <div class="container page-banner-content">
-            <h1>About Us</h1>
-            <div class="breadcrumbs">
-                <a href="{% url 'home' %}">Home</a> &nbsp;&gt;&nbsp; <span>About Us</span>
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo text-white">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="logo-text">
+                    Wah Cantt
+                    <span class="logo-subtitle">Coaster Tour</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/beautiful_places.html" class="nav-link">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link">Booking</a>
+                <a href="/about.html" class="nav-link active">About Us</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="tel:+923000000000" class="contact-phone">
+                    <i class="fa-solid fa-phone text-green"></i>
+                    <span>+92-300-0000000</span>
+                </a>
+                <a href="/login.html" class="btn-auth">
+                    <i class="fa-solid fa-user"></i> Login
+                </a>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Company Info Section -->
-    <section class="section">
+    <main>
+        <!-- Page Header -->
+        <section style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%); color: white; padding: 80px 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: 2.5em; margin-bottom: 20px;">About Us</h1>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section style="padding: 80px 0; background: var(--bg-light);">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                    <!-- Left: Image -->
+                    <div style="position: relative;">
+                        <img src="/images/tours/wah-gardens.jpg" alt="Wah Cantt" style="width: 100%; border-radius: var(--border-radius); box-shadow: var(--card-shadow);">
+                        <div style="position: absolute; bottom: 30px; right: 30px; background: var(--accent-green); color: white; padding: 30px; border-radius: var(--border-radius); text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+                            <h3 style="font-size: 2em; margin-bottom: 5px;">5+</h3>
+                            <p>Years of<br>Experience</p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Text -->
+                    <div>
+                        <h2 style="font-size: 2.2em; color: var(--text-dark); margin-bottom: 20px;">We Provide Best Travel Experience In Wah Cantt</h2>
+                        <p style="color: var(--text-slate); line-height: 1.8; margin-bottom: 20px; font-size: 1.05em;">
+                            Wah Cantt Coaster Tour is your trusted travel partner. We offer safe, comfortable, and affordable coaster services to explore the beautiful historical and scenic places in and around Wah Cantt.
+                        </p>
+
+                        <div style="margin: 30px 0;">
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <i class="fa-solid fa-circle-check" style="color: var(--accent-green); font-size: 1.3em; flex-shrink: 0;"></i>
+                                <span style="color: var(--text-dark); font-weight: 500;">Experienced Drivers with verified credentials</span>
+                            </div>
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <i class="fa-solid fa-circle-check" style="color: var(--accent-green); font-size: 1.3em; flex-shrink: 0;"></i>
+                                <span style="color: var(--text-dark); font-weight: 500;">Comfortable and well-maintained coasters</span>
+                            </div>
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <i class="fa-solid fa-circle-check" style="color: var(--accent-green); font-size: 1.3em; flex-shrink: 0;"></i>
+                                <span style="color: var(--text-dark); font-weight: 500;">Affordable packages for all budgets</span>
+                            </div>
+                            <div style="display: flex; gap: 15px;">
+                                <i class="fa-solid fa-circle-check" style="color: var(--accent-green); font-size: 1.3em; flex-shrink: 0;"></i>
+                                <span style="color: var(--text-dark); font-weight: 500;">100% Customer Satisfaction Guarantee</span>
+                            </div>
+                        </div>
+
+                        <a href="/booking.html" class="home-btn home-btn-primary" style="display: inline-block; margin-top: 10px;">
+                            <i class="fa-solid fa-calendar-check"></i> Book Your Tour Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section style="padding: 60px 0; background: var(--primary-dark); color: white;">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: center;">
+                    <div>
+                        <h3 style="font-size: 2.5em; margin-bottom: 10px; color: var(--accent-green);">500+</h3>
+                        <p style="opacity: 0.9;">Happy Customers</p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 2.5em; margin-bottom: 10px; color: var(--accent-orange);">50+</h3>
+                        <p style="opacity: 0.9;">Tours Completed</p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 2.5em; margin-bottom: 10px; color: var(--accent-green);">12</h3>
+                        <p style="opacity: 0.9;">Destinations</p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 2.5em; margin-bottom: 10px; color: var(--accent-orange);">24/7</h3>
+                        <p style="opacity: 0.9;">Customer Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <div class="about-grid">
-                <div class="about-img-container">
-                    <img src="{% static 'images/about_landmark.png' %}" alt="Wah Cantt Landmark" class="about-img">
-                    <div class="about-badge">
-                        <h2>5+</h2>
-                        <p>Years of<br>Experience</p>
-                    </div>
+            <div class="footer-grid">
+                <div class="footer-col-about">
+                    <a href="/" class="logo text-white footer-logo">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-bus"></i>
+                        </div>
+                        <div class="logo-text">
+                            Wah Cantt
+                            <span class="logo-subtitle">Coaster Tour</span>
+                        </div>
+                    </a>
                 </div>
-                <div class="about-text">
-                    <h2 class="text-dark">We Provide Best Travel Experience In Wah Cantt</h2>
-                    <p>Wah Cantt Coaster Tour is your trusted travel partner. We offer safe, comfortable, and affordable coaster services to explore the beautiful historical and scenic places in and around Wah Cantt.</p>
-                    
-                    <div class="about-bullets">
-                        <div class="bullet-item">
-                            <i class="fa-solid fa-circle-check bullet-icon"></i> Experienced Drivers
-                        </div>
-                        <div class="bullet-item">
-                            <i class="fa-solid fa-circle-check bullet-icon"></i> Comfortable Coasters
-                        </div>
-                        <div class="bullet-item">
-                            <i class="fa-solid fa-circle-check bullet-icon"></i> Affordable Packages
-                        </div>
-                        <div class="bullet-item">
-                            <i class="fa-solid fa-circle-check bullet-icon"></i> Customer Satisfaction
-                        </div>
-                    </div>
-                    
-                    <a href="{% url 'booking' %}" class="btn btn-orange">Book Your Tour Now</a>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Places</a></li>
+                        <li><a href="/booking.html">Book</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <ul class="footer-links" style="color: var(--text-slate);">
+                        <li><i class="fa-solid fa-phone text-green"></i> 0334-1944963</li>
+                    </ul>
                 </div>
             </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wah Cantt Coaster Tour.</p>
+            </div>
         </div>
+    </footer>
+
+    <script defer src="/js/main.js?v=1.7"></script>
+    <script>
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                links.forEach(link => {
+                    link.href = link.href.split('?')[0] + '?v=' + Date.now();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
     </section>
 
     <!-- Stats Bar -->

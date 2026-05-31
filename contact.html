@@ -1,53 +1,193 @@
-{% extends 'index.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Wah Cantt Coaster Tour</title>
+    
+    <!-- CSS links -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css?v=1.8">
+    <link rel="stylesheet" href="/css/pages-public.css?v=2.0">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-{% block title %}Contact Us - Wah Cantt Coaster Tour{% endblock %}
-
-{% block content %}
-    <!-- Hero Banner -->
-    <section class="contact-hero" style="background-image: url('{% static 'images/hero_bg.png' %}');">
-        <div class="contact-hero-overlay"></div>
-        <!-- Floating particles -->
-        <div class="contact-particles">
-            <span class="particle p1"></span>
-            <span class="particle p2"></span>
-            <span class="particle p3"></span>
-            <span class="particle p4"></span>
-            <span class="particle p5"></span>
-            <span class="particle p6"></span>
-        </div>
-        <div class="container contact-hero-inner">
-            <div class="contact-hero-badge">
-                <i class="fa-solid fa-headset"></i> We're Here For You
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo text-white">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="logo-text">
+                    Wah Cantt
+                    <span class="logo-subtitle">Coaster Tour</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/beautiful_places.html" class="nav-link">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link">Booking</a>
+                <a href="/about.html" class="nav-link">About Us</a>
+                <a href="/contact.html" class="nav-link active">Contact</a>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="tel:+923000000000" class="contact-phone">
+                    <i class="fa-solid fa-phone text-green"></i>
+                    <span>+92-300-0000000</span>
+                </a>
+                <a href="/login.html" class="btn-auth">
+                    <i class="fa-solid fa-user"></i> Login
+                </a>
             </div>
-            <h1 class="contact-hero-title">Get In <span>Touch</span></h1>
-            <p class="contact-hero-sub">Have questions about tours, bookings, or custom packages?<br>We'd love to hear from you.</p>
         </div>
-    </section>
+    </header>
 
-    <!-- Main Contact Section -->
-    <section class="contact-main-section">
+    <main>
+        <!-- Hero Section -->
+        <section style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%); color: white; padding: 100px 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: 2.5em; margin-bottom: 20px;"><i class="fa-solid fa-headset"></i> Get In Touch</h1>
+                <p style="font-size: 1.2em; opacity: 0.9;">Have questions? We'd love to hear from you.</p>
+            </div>
+        </section>
+
+        <!-- Contact Info Cards -->
+        <section style="padding: 60px 0; background: var(--bg-light);">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px;">
+                    <!-- Location Card -->
+                    <div style="background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: rgba(46, 204, 113, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fa-solid fa-location-dot" style="font-size: 1.8em; color: var(--accent-green);"></i>
+                        </div>
+                        <h3 style="font-size: 1.3em; margin-bottom: 12px; color: var(--text-dark);">Visit Us</h3>
+                        <p style="color: var(--text-slate);">Main GT Road<br>Near POF Barrier 1<br>Wah Cantt, Punjab</p>
+                    </div>
+
+                    <!-- Phone Card -->
+                    <div style="background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: rgba(255, 122, 0, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fa-solid fa-phone" style="font-size: 1.8em; color: var(--accent-orange);"></i>
+                        </div>
+                        <h3 style="font-size: 1.3em; margin-bottom: 12px; color: var(--text-dark);">Call Us</h3>
+                        <p style="color: var(--accent-green); font-weight: 600; font-size: 1.1em;">0334-1944963</p>
+                        <p style="color: var(--text-slate);">0313-9071373</p>
+                    </div>
+
+                    <!-- Email Card -->
+                    <div style="background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: rgba(46, 204, 113, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fa-solid fa-envelope" style="font-size: 1.8em; color: var(--accent-green);"></i>
+                        </div>
+                        <h3 style="font-size: 1.3em; margin-bottom: 12px; color: var(--text-dark);">Email</h3>
+                        <p style="color: var(--text-slate);">info@wahcanttcoasters.com</p>
+                        <p style="color: var(--text-slate); font-size: 0.9em;">We reply within 24 hours</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div style="max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow);">
+                    <h2 style="font-size: 1.8em; margin-bottom: 30px; color: var(--text-dark);">Send us a Message</h2>
+                    
+                    <form onsubmit="handleContact(event)">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Full Name</label>
+                            <input type="text" name="name" placeholder="Your name" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Email</label>
+                            <input type="email" name="email" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Phone</label>
+                            <input type="tel" name="phone" placeholder="0300-0000000" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Subject</label>
+                            <input type="text" name="subject" placeholder="What is this about?" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Message</label>
+                            <textarea name="message" placeholder="Your message..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em; resize: vertical; min-height: 120px;" required></textarea>
+                        </div>
+
+                        <button type="submit" class="home-btn home-btn-primary" style="width: 100%; padding: 14px; font-size: 1.1em;">
+                            <i class="fa-solid fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col-about">
+                    <a href="/" class="logo text-white footer-logo">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-bus"></i>
+                        </div>
+                        <div class="logo-text">
+                            Wah Cantt
+                            <span class="logo-subtitle">Coaster Tour</span>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Places</a></li>
+                        <li><a href="/booking.html">Book</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <ul class="footer-links" style="color: var(--text-slate);">
+                        <li><i class="fa-solid fa-phone text-green"></i> 0334-1944963</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wah Cantt Coaster Tour.</p>
+            </div>
+        </div>
+    </footer>
 
-            <!-- Quick Info Strip -->
-            <div class="contact-strip">
-                <div class="strip-item">
-                    <div class="strip-icon si-green"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="strip-text">
-                        <span class="strip-label">Visit Us</span>
-                        <span class="strip-value">Main GT Road, Wah Cantt</span>
-                    </div>
-                </div>
-                <div class="strip-divider"></div>
-                <div class="strip-item">
-                    <div class="strip-icon si-orange"><i class="fa-solid fa-phone"></i></div>
-                    <div class="strip-text">
-                        <span class="strip-label">Booking</span>
-                        <span class="strip-value">0334-1944963 / 0313-9071373</span>
-                    </div>
-                </div>
-                <div class="strip-divider"></div>
-                <div class="strip-item">
+    <script defer src="/js/main.js?v=1.7"></script>
+    <script>
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                links.forEach(link => {
+                    link.href = link.href.split('?')[0] + '?v=' + Date.now();
+                });
+            }
+        });
+
+        function handleContact(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will contact you soon.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
                     <div class="strip-icon si-blue"><i class="fa-solid fa-envelope"></i></div>
                     <div class="strip-text">
                         <span class="strip-label">Email Us</span>
