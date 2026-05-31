@@ -4,22 +4,9 @@
   "description": "Wah Cantt Coaster Tour - Frontend",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start -p $PORT",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "axios": "^1.6.0",
-    "classnames": "^2.3.2"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/react": "^18.2.0",
-    "typescript": "^5.0.0"
+    "dev": "npx http-server . -p 3000 -c-1",
+    "build": "echo 'Static site - no build needed'",
+    "start": "npx http-server . -p $PORT"
   },
   "engines": {
     "node": "18.x"

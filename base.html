@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Wah Cantt Coaster Tour{% endblock %}</title>
+    <title>Wah Cantt Coaster Tour</title>
     
     <!-- CSS link -->
-    {% load static %}
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.7">
-    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" href="/css/style.css?v=1.8">
+    <link rel="stylesheet" href="/css/pages-public.css?v=1.8">
+    <link rel="stylesheet" href="/css/dashboard-ui.css?v=1.8">
     
     <!-- Icons (using FontAwesome CDN for convenience) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,9 +25,9 @@
 <body>
 
     <!-- Sticky Header -->
-    <header class="header {% block header_class %}{% endblock %}">
+    <header class="header">
         <div class="container nav-container">
-            <a href="{% url 'home' %}" class="logo text-white">
+            <a href="/" class="logo text-white">
                 <div class="logo-icon">
                     <i class="fa-solid fa-bus"></i>
                 </div>
@@ -38,11 +38,11 @@
             </a>
             
             <nav class="nav-menu">
-                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
-                <a href="{% url 'beautiful_places' %}" class="nav-link {% if request.resolver_match.url_name == 'beautiful_places' %}active{% endif %}">Beautiful Places</a>
-                <a href="{% url 'booking' %}" class="nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}">Booking</a>
-                <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
-                <a href="{% url 'contact_message' %}" class="nav-link {% if request.resolver_match.url_name == 'contact_message' %}active{% endif %}">Contact</a>
+                <a href="/" class="nav-link">Home</a>
+                <a href="/beautiful_places.html" class="nav-link">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link">Booking</a>
+                <a href="/about.html" class="nav-link">About Us</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
             </nav>
             <button class="nav-toggle" aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars"></i>
@@ -53,40 +53,16 @@
                     <i class="fa-solid fa-phone text-green"></i>
                     <span>+92-300-0000000</span>
                 </a>
-                
-                {% if user.is_authenticated %}
-                    {% if user.is_admin %}
-                        <a href="{% url 'admin_dashboard' %}" class="btn-auth">
-                            <i class="fa-solid fa-user-shield"></i> Admin Panel
-                        </a>
-                    {% else %}
-                        <a href="{% url 'customer_dashboard' %}" class="btn-auth">
-                            <i class="fa-solid fa-gauge"></i> Dashboard
-                        </a>
-                    {% endif %}
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn-auth">
-                        <i class="fa-solid fa-user"></i> Login / Signup
-                    </a>
-                {% endif %}
+                <a href="/login.html" class="btn-auth">
+                    <i class="fa-solid fa-user"></i> Login / Signup
+                </a>
             </div>
         </div>
     </header>
 
-    {% if messages %}
-        <div class="container" style="padding: 14px 0;">
-            {% for message in messages %}
-                <div style="padding: 14px; margin-bottom: 16px; border-radius: var(--border-radius); background: {% if message.tags == 'error' or message.tags == 'warning' %}#fde8e8; color: #b91c1c; border: 1px solid #f8c2c2{% else %}#def7ec; color: #065f46; border: 1px solid #bbf7d0{% endif %}; font-weight: 500;">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
     <!-- Main Content Area -->
     <main>
-        {% block content %}
-        {% endblock %}
+        <!-- Content will be inserted here -->
     </main>
 
     <!-- Footer -->
@@ -94,7 +70,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col-about">
-                    <a href="{% url 'home' %}" class="logo text-white footer-logo">
+                    <a href="/" class="logo text-white footer-logo">
                         <div class="logo-icon">
                             <i class="fa-solid fa-bus"></i>
                         </div>
@@ -110,10 +86,10 @@
                 <div>
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'beautiful_places' %}">Beautiful Places</a></li>
-                        <li><a href="{% url 'booking' %}">Book a Tour</a></li>
-                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Beautiful Places</a></li>
+                        <li><a href="/booking.html">Book a Tour</a></li>
+                        <li><a href="/about.html">About Us</a></li>
                     </ul>
                 </div>
                 <div>
@@ -144,6 +120,53 @@
     </footer>
 
     <!-- JS file link -->
-    <script defer src="{% static 'js/main.js' %}?v=1.6"></script>
+    <script defer src="/js/main.js?v=1.7"></script>
+    
+    <!-- Tab switching fix -->
+    <script>
+        // Ensure CSS stays loaded when switching tabs
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                console.log('Page hidden');
+            } else {
+                console.log('Page visible - reloading styles');
+                // Reload stylesheets to ensure they persist
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                links.forEach(link => {
+                    const href = link.href;
+                    link.href = href.split('?')[0] + '?v=' + Date.now();
+                });
+            }
+        });
+
+        // Handle navigation between pages
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.hostname === window.location.hostname) {
+                const href = link.getAttribute('href');
+                if (!href.startsWith('http') && !href.startsWith('tel:') && !href.startsWith('mailto:')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
+            }
+        });
+
+        // Set active nav link
+        function setActiveNav() {
+            const currentPage = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === currentPage || (href === '/' && currentPage === '/')) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Call on page load
+        window.addEventListener('load', setActiveNav);
+        document.addEventListener('DOMContentLoaded', setActiveNav);
+    </script>
 </body>
 </html>

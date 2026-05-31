@@ -2,7 +2,51 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. Entrance animations (hero/banner only — do not animate place cards; breaks grid visibility)
+    // ============================================
+    // 1. CSS PERSISTENCE FIX FOR TAB SWITCHING
+    // ============================================
+    
+    // Reload CSS when page becomes visible (tab switching fix)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            console.log('Page is now visible - reloading stylesheets');
+            
+            // Force reload all stylesheets to ensure they persist
+            const links = document.querySelectorAll('link[rel="stylesheet"]');
+            links.forEach((link, index) => {
+                const href = link.href.split('?')[0];
+                const newHref = href + '?v=' + Date.now() + Math.random();
+                
+                // Create new link element
+                const newLink = document.createElement('link');
+                newLink.rel = 'stylesheet';
+                newLink.href = newHref;
+                
+                // Replace old link
+                link.parentNode.replaceChild(newLink, link);
+            });
+            
+            // Reapply any inline styles or re-trigger CSS
+            document.body.style.display = 'block';
+            document.body.offsetHeight; // Trigger reflow
+        }
+    });
+    
+    // Ensure CSS is applied when page loads
+    window.addEventListener('load', function() {
+        console.log('Page loaded - ensuring CSS is applied');
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+            if (link.href) {
+                console.log('CSS loaded:', link.href);
+            }
+        });
+    });
+    
+    // ============================================
+    // 2. ENTRANCE ANIMATIONS
+    // ============================================
+    
     const skeletonGrid = document.getElementById('placesSkeletonGrid');
     const realGrid = document.getElementById('placesRealGrid');
 
@@ -27,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         revealPlaceGrid();
     }
 
+    // GSAP animations
     if (typeof gsap !== 'undefined') {
         if (document.querySelector('.home-simple-hero-inner')) {
             gsap.from('.home-simple-hero-inner > *', {
@@ -47,6 +92,67 @@ document.addEventListener('DOMContentLoaded', function() {
                 delay: 0.4
             });
         }
+    }
+    
+    // ============================================
+    // 3. NAVIGATION
+    // ============================================
+    
+    // Set active nav link based on current page
+    function setActiveNav() {
+        const currentPage = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === currentPage || (href === '/' && (currentPage === '/' || currentPage === '/index.html'))) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    setActiveNav();
+    window.addEventListener('load', setActiveNav);
+    
+    // ============================================
+    // 4. MOBILE MENU TOGGLE
+    // ============================================
+    
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (navToggle) {
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+    }
+    
+    // Close menu when link is clicked
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+    });
+    
+    // ============================================
+    // 5. SMOOTH SCROLLING
+    // ============================================
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    
+    console.log('Main JS loaded and initialized');
+});
 
         if (document.querySelector('.places-page-hero, .page-banner-content')) {
             gsap.from('.places-page-hero .page-banner-content > *, .page-banner-content > *', {
