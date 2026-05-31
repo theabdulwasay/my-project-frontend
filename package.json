@@ -1,6 +1,9 @@
 {
   "name": "wah-coaster-frontend",
   "version": "1.0.0",
+  "engines": {
+  "node": "24.x"
+}
   "description": "Wah Cantt Coaster Tour - Frontend",
   "private": true,
   "scripts": {
