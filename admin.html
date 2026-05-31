@@ -19,7 +19,7 @@
     <div class="auth-wrapper" style="background-image: url('{% static 'images/hero_bg.png' %}');">
         <div class="auth-card">
             <div class="auth-header">
-                <a href="{% url 'home' %}" class="logo" style="color: var(--primary-dark); justify-content: center; margin-bottom: 20px;">
+                <a href="/" class="logo" style="color: var(--primary-dark); justify-content: center; margin-bottom: 20px;">
                     <div class="logo-icon" style="background: var(--accent-orange);">
                         <i class="fa-solid fa-user-lock" style="color: var(--text-white);"></i>
                     </div>
@@ -40,7 +40,7 @@
                 {% endfor %}
             {% endif %}
 
-            <form action="{% url 'admin_login' %}" method="POST">
+            <form action="/api/admin-login" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="admin_email">Admin Email</label>
@@ -58,7 +58,7 @@
             </form>
 
             <div class="auth-footer" style="margin-top: 20px;">
-                <a href="{% url 'forgot_password' %}" class="auth-link" style="color: var(--accent-orange);">Forgot Password?</a>
+                <a href="/forgot_password.html" class="auth-link" style="color: var(--accent-orange);">Forgot Password?</a>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
     <!-- Admin Dashboard View -->
     <div class="dashboard-layout">
         <aside class="sidebar">
-            <a href="{% url 'home' %}" class="sidebar-brand">
+            <a href="/" class="sidebar-brand">
                 <i class="fa-solid fa-user-shield"></i>
                 <span>WCT Admin</span>
             </a>
@@ -97,7 +97,7 @@
             </nav>
 
             <div class="sidebar-footer">
-                <a href="{% url 'logout' %}" class="sidebar-link">
+                <a href="/api/logout" class="sidebar-link">
                     <i class="fa-solid fa-power-off"></i> Logout
                 </a>
             </div>
@@ -115,11 +115,11 @@
                     </div>
                     <div class="dash-sticky-toolbar" id="adminToolbar">
                         <button type="button" class="dash-btn-primary btn-open-modal" data-target="modal-tour"><i class="fa-solid fa-plus"></i> Add Tour</button>
-                        <form action="{% url 'mark_all_messages' %}" method="POST" style="display:inline;margin:0;">
+                        <form action="/api/mark-all-messages" method="POST" style="display:inline;margin:0;">
                             {% csrf_token %}
                             <button type="submit" class="dash-quick-pill" style="border:none;cursor:pointer;"><i class="fa-solid fa-envelope-open"></i> Mark Messages Read</button>
                         </form>
-                        <form action="{% url 'mark_all_notifications' %}" method="POST" style="display:inline;margin:0;">
+                        <form action="/api/mark-all-notifications" method="POST" style="display:inline;margin:0;">
                             {% csrf_token %}
                             <button type="submit" class="dash-quick-pill" style="border:none;cursor:pointer;"><i class="fa-solid fa-bell-slash"></i> Clear Alerts</button>
                         </form>
@@ -242,11 +242,11 @@
                                         </td>
                                         <td class="admin-actions">
                                             {% if booking.status == 'Pending' %}
-                                                <form action="{% url 'approve_booking' booking.id %}" method="POST" style="display:inline;">
+                                                <form action="/api/approve-booking" method="POST" style="display:inline;">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn-sm btn-success-sm"><i class="fa-solid fa-check"></i> Approve</button>
                                                 </form>
-                                                <form action="{% url 'reject_booking' booking.id %}" method="POST" style="display:inline;">
+                                                <form action="/api/reject-booking" method="POST" style="display:inline;">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn-sm btn-danger-sm"><i class="fa-solid fa-xmark"></i> Reject</button>
                                                 </form>
@@ -268,7 +268,7 @@
 
             <div id="section-coasters" class="dashboard-section" style="display: none;">
                 <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
-                    <form action="{% url 'add_coaster' %}" method="POST" style="display:flex; gap:12px; align-items:center;">
+                    <form action="/api/add-coaster" method="POST" style="display:flex; gap:12px; align-items:center;">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Coaster name" required class="form-control" style="width:220px;">
                         <input type="text" name="plate_number" placeholder="Plate #" class="form-control" style="width:140px;">
@@ -311,11 +311,11 @@
                                         {% endif %}
                                     </td>
                                     <td class="admin-actions">
-                                        <form action="{% url 'toggle_coaster_availability' c.id %}" method="POST" style="display:inline;">
+                                        <form action="/api/toggle-coaster-availability" method="POST" style="display:inline;">
                                             {% csrf_token %}
                                             <button type="submit" class="btn-sm">Toggle Availability</button>
                                         </form>
-                                        <form action="{% url 'delete_coaster' c.id %}" method="POST" style="display:inline; margin-left:8px;" onsubmit="return confirm('Delete this coaster?');">
+                                        <form action="/api/delete-coaster" method="POST" style="display:inline; margin-left:8px;" onsubmit="return confirm('Delete this coaster?');">
                                             {% csrf_token %}
                                             <button type="submit" class="btn-sm" style="background:#fde8e8; color:#e74c3c; border:1px solid #fbd5d5;">Delete</button>
                                         </form>
@@ -371,11 +371,11 @@
                                         </td>
                                         <td class="admin-actions">
                                             {% if booking.status == 'Pending' %}
-                                                <form action="{% url 'approve_booking' booking.id %}" method="POST" style="display:inline;">
+                                                <form action="/api/approve-booking" method="POST" style="display:inline;">
                                                     {% csrf_token %}
-                                                    <button type="submit" class="btn-sm btn-success-sm"><i class="fa-solid fa-check"></i></button>
+                                                    <button type="submit" class="btn-sm btn-success-sm">Approve</button>
                                                 </form>
-                                                <form action="{% url 'reject_booking' booking.id %}" method="POST" style="display:inline;">
+                                                <form action="/api/reject-booking" method="POST" style="display:inline;">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn-sm btn-danger-sm"><i class="fa-solid fa-xmark"></i></button>
                                                 </form>
@@ -430,7 +430,7 @@
                                         <span class="badge badge-confirmed">{% if tour.is_active %}Active{% else %}Inactive{% endif %}</span>
                                     </td>
                                     <td>
-                                        <form action="{% url 'delete_tour' tour.id %}" method="POST" style="display:inline;" onsubmit="return confirm('Delete &quot;{{ tour.name }}&quot;? This cannot be undone.');">
+                                                <form action="/api/delete-tour" method="POST" style="display:inline;" onsubmit="return confirm('Delete &quot;{{ tour.name }}&quot;? This cannot be undone.');">
                                             {% csrf_token %}
                                             <button type="submit" class="btn-sm" style="background:#fde8e8; color:#e74c3c; border:1px solid #fbd5d5;">
                                                 <i class="fa-solid fa-trash"></i> Delete
@@ -511,7 +511,7 @@
                                         <td>{{ msg.created_at|date:"d M Y - H:i" }}</td>
                                         <td>
                                             {% if not msg.is_read %}
-                                                <form action="{% url 'mark_contact_message' msg.id %}" method="POST" style="display:inline;">
+                                                <form action="/api/mark-contact-message" method="POST" style="display:inline;">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn-sm btn-success-sm">Mark Read</button>
                                                 </form>
@@ -554,7 +554,7 @@
                                         <td>{{ n.created_at|date:"d M Y - H:i" }}</td>
                                         <td>
                                             {% if not n.is_read %}
-                                                <form action="{% url 'mark_notification' n.id %}" method="POST" style="display:inline;">
+                                                <form action="/api/mark-notification" method="POST" style="display:inline;">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn-sm btn-success-sm">Mark Read</button>
                                                 </form>
@@ -586,7 +586,7 @@
                 <span class="modal-close btn-close-modal">&times;</span>
             </div>
             
-            <form action="{% url 'add_tour' %}" method="POST" enctype="multipart/form-data">
+            <form action="/api/add-tour" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="tour_name">Tour Place Name</label>

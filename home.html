@@ -231,11 +231,11 @@
         <div class="container">
             <div class="home-simple-head">
                 <h2>Popular destinations</h2>
-                <a href="{% url 'beautiful_places' %}" class="home-link-all">See all <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="/beautiful_places.html" class="home-link-all">See all <i class="fa-solid fa-arrow-right"></i></a>
             </div>
             <div class="home-places-grid">
                 {% for tour in featured_tours|slice:":6" %}
-                    <a href="{% url 'booking' %}?tour_id={{ tour.id }}" class="home-place-card">
+                    <a href="/booking.html" class="home-place-card">
                         <div class="home-place-img">
                             <img src="{% static tour.image %}" alt="{{ tour.name }}" loading="lazy">
                             <span class="home-place-tag">{{ tour.category }}</span>
@@ -289,7 +289,7 @@
     <section class="home-simple-cta">
         <div class="container">
             <h2>Ready for your trip?</h2>
-            <a href="{% url 'booking' %}" class="home-btn home-btn-dark">Book now</a>
+            <a href="/booking.html" class="home-btn home-btn-dark">Book now</a>
         </div>
     </section>
 </div>

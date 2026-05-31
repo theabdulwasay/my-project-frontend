@@ -234,7 +234,7 @@
     <!-- Sticky Header -->
     <header class="header {% block header_class %}{% endblock %}">
         <div class="container nav-container">
-            <a href="{% url 'home' %}" class="logo text-white">
+            <a href="/" class="logo text-white">
                 <div class="logo-icon">
                     <i class="fa-solid fa-bus"></i>
                 </div>
@@ -245,11 +245,11 @@
             </a>
             
             <nav class="nav-menu">
-                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
-                <a href="{% url 'beautiful_places' %}" class="nav-link {% if request.resolver_match.url_name == 'beautiful_places' %}active{% endif %}">Beautiful Places</a>
-                <a href="{% url 'booking' %}" class="nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}">Booking</a>
-                <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
-                <a href="{% url 'contact_message' %}" class="nav-link {% if request.resolver_match.url_name == 'contact_message' %}active{% endif %}">Contact</a>
+                <a href="/" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                <a href="/beautiful_places.html" class="nav-link {% if request.resolver_match.url_name == 'beautiful_places' %}active{% endif %}">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}">Booking</a>
+                <a href="/about.html" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                <a href="/contact.html" class="nav-link {% if request.resolver_match.url_name == 'contact_message' %}active{% endif %}">Contact</a>
             </nav>
             <button class="nav-toggle" aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars"></i>
@@ -263,16 +263,16 @@
                 
                 {% if user.is_authenticated %}
                     {% if user.is_admin %}
-                        <a href="{% url 'admin_dashboard' %}" class="btn-auth">
+                        <a href="/admin.html" class="btn-auth">
                             <i class="fa-solid fa-user-shield"></i> Admin Panel
                         </a>
                     {% else %}
-                        <a href="{% url 'customer_dashboard' %}" class="btn-auth">
+                        <a href="/dashboard.html" class="btn-auth">
                             <i class="fa-solid fa-gauge"></i> Dashboard
                         </a>
                     {% endif %}
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn-auth">
+                    <a href="/login.html" class="btn-auth">
                         <i class="fa-solid fa-user"></i> Login / Signup
                     </a>
                 {% endif %}
@@ -301,7 +301,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col-about">
-                    <a href="{% url 'home' %}" class="logo text-white footer-logo">
+                    <a href="/" class="logo text-white footer-logo">
                         <div class="logo-icon">
                             <i class="fa-solid fa-bus"></i>
                         </div>
@@ -317,10 +317,10 @@
                 <div>
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'beautiful_places' %}">Beautiful Places</a></li>
-                        <li><a href="{% url 'booking' %}">Book a Tour</a></li>
-                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Beautiful Places</a></li>
+                        <li><a href="/booking.html">Book a Tour</a></li>
+                        <li><a href="/about.html">About Us</a></li>
                     </ul>
                 </div>
                 <div>

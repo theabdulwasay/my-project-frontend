@@ -219,7 +219,7 @@
                         </div>
                     </div>
 
-                    <form action="{% url 'contact_message' %}" method="POST" class="contact-form-v2" id="contactFormV2">
+                    <form action="/api/contact-message" method="POST" class="contact-form-v2" id="contactFormV2">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ request.path }}">
 

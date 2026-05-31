@@ -7,7 +7,7 @@
     <div class="auth-wrapper" style="background-image: url('{% static 'images/hero_bg.png' %}');">
         <div class="auth-card">
             <div class="auth-header">
-                <a href="{% url 'home' %}" class="logo" style="color: var(--primary-dark); justify-content: center; margin-bottom: 20px;">
+                <a href="/" class="logo" style="color: var(--primary-dark); justify-content: center; margin-bottom: 20px;">
                     <div class="logo-icon">
                         <i class="fa-solid fa-bus" style="color: var(--primary-dark);"></i>
                     </div>
@@ -37,7 +37,7 @@
                 {% endfor %}
             {% endif %}
 
-            <form action="{% url 'verify_otp' %}" method="POST">
+            <form action="/api/verify-otp" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="email" value="{{ email }}">
                 <input type="hidden" name="purpose" value="{{ purpose }}">
@@ -60,14 +60,14 @@
 
             {% if purpose == 'reset' %}
             <div class="auth-footer" style="margin-top: 16px;">
-                <a href="{% url 'forgot_password' %}" class="auth-link">Change email</a>
+                <a href="/forgot_password.html" class="auth-link">Change email</a>
             </div>
             {% endif %}
 
             <!-- Resend OTP -->
             <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                 <p style="color: #64748b; font-size: 14px; margin-bottom: 10px;">Didn't receive the OTP?</p>
-                <form action="{% url 'resend_otp' %}" method="POST" style="display: inline;">
+                <form action="/api/resend-otp" method="POST" style="display: inline;">
                     {% csrf_token %}
                     <input type="hidden" name="email" value="{{ email }}">
                     <input type="hidden" name="purpose" value="{{ purpose }}">

@@ -14,7 +14,7 @@
     <div class="dashboard-layout">
         <!-- Shared Sidebar -->
         <aside class="sidebar">
-            <a href="{% url 'home' %}" class="sidebar-brand">
+            <a href="/" class="sidebar-brand">
                 <i class="fa-solid fa-bus text-green"></i> WCT
             </a>
 
@@ -32,7 +32,7 @@
             </div>
 
             <div class="sidebar-footer">
-                <a href="{% url 'logout' %}" class="sidebar-link" style="color:#e74c3c;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                <a href="/api/logout" class="sidebar-link" style="color:#e74c3c;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             </div>
         </aside>
 
@@ -48,7 +48,7 @@
                         <div class="avatar-sm">{{ user.first_name|slice":1"|default:user.email|slice:":1"|upper }}</div>
                         <span style="font-weight:600; font-size:14px; color:var(--primary-dark);">{{ user.email }}{% if user.is_admin %} (Admin){% endif %}</span>
                     </div>
-                    <a href="{% url 'logout' %}" class="btn btn-outline" style="padding:8px 12px; border-radius:10px; color:#e74c3c; border-color: rgba(231,76,60,0.12);">Logout <i class="fa-solid fa-right-from-bracket" style="margin-left:8px;"></i></a>
+                    <a href="/api/logout" class="btn btn-outline" style="padding:8px 12px; border-radius:10px; color:#e74c3c; border-color: rgba(231,76,60,0.12);">Logout <i class="fa-solid fa-right-from-bracket" style="margin-left:8px;"></i></a>
                 </div>
             </div>
 

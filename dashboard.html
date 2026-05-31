@@ -14,7 +14,7 @@
 
     <div class="dashboard-layout">
         <aside class="sidebar">
-            <a href="{% url 'home' %}" class="sidebar-brand">
+            <a href="/" class="sidebar-brand">
                 <i class="fa-solid fa-bus"></i>
                 <span>WCT Tour</span>
             </a>
@@ -27,7 +27,7 @@
                 <button type="button" class="sidebar-util-btn" title="Notifications">
                     <i class="fa-regular fa-bell"></i>
                 </button>
-                <a href="{% url 'beautiful_places' %}" class="sidebar-util-btn" title="Explore places">
+                <a href="/beautiful_places.html" class="sidebar-util-btn" title="Explore places">
                     <i class="fa-regular fa-heart"></i>
                 </a>
                 <button type="button" class="sidebar-util-btn" title="Settings" onclick="document.getElementById('link-profile').click();">
@@ -39,13 +39,13 @@
                 <a href="#overview" class="sidebar-link active" id="link-overview">
                     <i class="fa-solid fa-chart-pie"></i> Overview
                 </a>
-                <a href="{% url 'beautiful_places' %}" class="sidebar-link">
+                <a href="/beautiful_places.html" class="sidebar-link">
                     <i class="fa-solid fa-location-dot"></i> Places
                 </a>
                 <a href="#overview" class="sidebar-link" id="link-tours">
                     <i class="fa-solid fa-map"></i> Tours
                 </a>
-                <a href="{% url 'booking' %}" class="sidebar-link">
+                <a href="/booking.html" class="sidebar-link">
                     <i class="fa-solid fa-ticket"></i> Book Tour
                 </a>
                 <a href="#bookings" class="sidebar-link" id="link-bookings">
@@ -57,7 +57,7 @@
             </nav>
 
             <div class="sidebar-footer">
-                <a href="{% url 'logout' %}" class="sidebar-link">
+                <a href="/api/logout" class="sidebar-link">
                     <i class="fa-solid fa-power-off"></i> Logout
                 </a>
             </div>
@@ -89,7 +89,7 @@
 
                     <header class="dash-topbar dash-fade-in dash-fade-in-delay-1">
                         <div class="dash-topbar-actions" style="width:100%; justify-content:flex-end;">
-                            <a href="{% url 'booking' %}" class="dash-btn-primary">
+                            <a href="/booking.html" class="dash-btn-primary">
                                 <i class="fa-solid fa-plus"></i> New Booking
                             </a>
                             <div class="dash-user-chip">
@@ -103,9 +103,9 @@
                     </header>
 
                     <div class="dash-quick-actions dash-fade-in dash-fade-in-delay-1">
-                        <a href="{% url 'booking' %}" class="dash-quick-pill"><i class="fa-solid fa-ticket"></i> Book Tour</a>
+                        <a href="/booking.html" class="dash-quick-pill"><i class="fa-solid fa-ticket"></i> Book Tour</a>
                         <a href="#bookings" class="dash-quick-pill" id="quickReservations"><i class="fa-solid fa-calendar"></i> My Trips</a>
-                        <a href="{% url 'beautiful_places' %}" class="dash-quick-pill"><i class="fa-solid fa-map"></i> Explore Places</a>
+                        <a href="/beautiful_places.html" class="dash-quick-pill"><i class="fa-solid fa-map"></i> Explore Places</a>
                         <a href="#profile" class="dash-quick-pill" id="quickSettings"><i class="fa-solid fa-user"></i> Profile</a>
                     </div>
 
@@ -156,7 +156,7 @@
                                         <p class="dash-trend-price">PKR {{ tour.price_per_seat|floatformat:0 }} <span style="font-weight:400;opacity:0.8;">/ seat</span></p>
                                         <div class="dash-stars" aria-hidden="true">★★★★★</div>
                                         <p class="dash-trend-desc">{{ tour.description|truncatewords:14 }}</p>
-                                        <a href="{% url 'booking' %}?tour_id={{ tour.id }}" class="dash-book-link">
+                                        <a href="/booking.html" class="dash-book-link">
                                             Book now <i class="fa-solid fa-arrow-right"></i>
                                         </a>
                                     </div>
@@ -190,7 +190,7 @@
                                 {% empty %}
                                     <div class="dash-empty">
                                         <i class="fa-solid fa-calendar-xmark"></i>
-                                        <p>No reservations yet.<br><a href="{% url 'booking' %}">Book your first tour</a></p>
+                                        <p>No reservations yet.<br><a href="/booking.html">Book your first tour</a></p>
                                     </div>
                                 {% endfor %}
                             </div>
@@ -283,7 +283,7 @@
                     </header>
 
                     <div class="dash-topbar-actions" style="margin-bottom:24px;">
-                        <a href="{% url 'booking' %}" class="dash-btn-primary"><i class="fa-solid fa-plus"></i> New Booking</a>
+                        <a href="/booking.html" class="dash-btn-primary"><i class="fa-solid fa-plus"></i> New Booking</a>
                     </div>
 
                     <div class="dash-panel table-card">
@@ -323,12 +323,12 @@
                                             </td>
                                             <td>
                                                 {% if booking.status == 'Pending' %}
-                                                    <form action="{% url 'cancel_booking' booking.id %}" method="POST" onsubmit="return confirm('Cancel this booking?');" style="display:inline;">
+                                                    <form action="/api/cancel-booking" method="POST" onsubmit="return confirm('Cancel this booking?');" style="display:inline;">
                                                         {% csrf_token %}
                                                         <button type="submit" class="btn-sm btn-danger-sm"><i class="fa-solid fa-xmark"></i> Cancel</button>
                                                     </form>
                                                 {% else %}
-                                                    <a href="{% url 'booking' %}?tour_id={{ booking.tour.id }}" class="btn-sm btn-success-sm"><i class="fa-solid fa-repeat"></i> Rebook</a>
+                                                    <a href="/booking.html" class="btn-sm btn-success-sm"><i class="fa-solid fa-repeat"></i> Rebook</a>
                                                 {% endif %}
                                             </td>
                                         </tr>
@@ -337,7 +337,7 @@
                                             <td colspan="8">
                                                 <div class="dash-empty">
                                                     <i class="fa-solid fa-ticket"></i>
-                                                    <p>No bookings found. <a href="{% url 'booking' %}">Book a tour</a></p>
+                                                    <p>No bookings found. <a href="/booking.html">Book a tour</a></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -356,7 +356,7 @@
                     </header>
 
                     <div class="dash-panel" style="max-width:720px;">
-                        <form action="{% url 'update_profile' %}" method="POST">
+                        <form action="/api/update-profile" method="POST">
                             {% csrf_token %}
                             <div class="dash-profile-grid">
                                 <div class="form-group">
