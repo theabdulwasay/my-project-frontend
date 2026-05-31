@@ -1,6 +1,5 @@
 {
-  "buildCommand": "node build.js",
-  "outputDirectory": "public",
+  "public": ".",
   "headers": [
     {
       "source": "/(.*)",
