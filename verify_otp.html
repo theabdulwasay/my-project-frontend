@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Verify OTP - Wah Cantt Coaster Tour{% endblock %}
+
+{% block content %}
+    <div class="auth-wrapper" style="background-image: url('{% static 'images/hero_bg.png' %}');">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="{% url 'home' %}" class="logo" style="color: var(--primary-dark); justify-content: center; margin-bottom: 20px;">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-bus" style="color: var(--primary-dark);"></i>
+                    </div>
+                    <div class="logo-text">
+                        Wah Cantt
+                        <span class="logo-subtitle" style="color: var(--primary-light);">Coaster Tour</span>
+                    </div>
+                </a>
+
+                <!-- OTP Icon -->
+                <div style="width: 70px; height: 70px; background: rgba(46, 204, 113, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                    <i class="fa-solid fa-envelope-circle-check" style="font-size: 32px; color: var(--accent-green);"></i>
+                </div>
+
+                <h2>{% if purpose == 'reset' %}Reset Password{% else %}Verify Your Email{% endif %}</h2>
+                <p>We've sent a 6-digit OTP code to</p>
+                <p style="font-weight: 700; color: var(--primary-dark); font-size: 16px; margin-top: 4px;">{{ email }}</p>
+            </div>
+
+            {# Development OTP display removed for production #}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="padding: 12px; margin-bottom: 20px; border-radius: var(--border-radius); background: {% if message.tags == 'error' %}#fde8e8; color: #e74c3c; border: 1px solid #fbd5d5{% else %}#def7ec; color: #03543f; border: 1px solid #bcf0da{% endif %}; font-size: 14px; font-weight: 500;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form action="{% url 'verify_otp' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="email" value="{{ email }}">
+                <input type="hidden" name="purpose" value="{{ purpose }}">
+
+                <div class="form-group">
+                    <label for="otp_code">Enter OTP Code</label>
+                    <input type="text" name="otp_code" id="otp_code" class="form-control" 
+                           placeholder="Enter 6-digit OTP code" 
+                           maxlength="6" 
+                           pattern="[0-9]{6}"
+                           style="text-align: center; font-size: 24px; letter-spacing: 12px; font-weight: 700; padding: 16px;"
+                           required autofocus>
+                </div>
+
+                <button type="submit" class="btn-auth-submit" style="margin-top: 10px;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    {% if purpose == 'reset' %}Verify OTP &amp; Continue{% else %}Verify OTP{% endif %}
+                </button>
+            </form>
+
+            {% if purpose == 'reset' %}
+            <div class="auth-footer" style="margin-top: 16px;">
+                <a href="{% url 'forgot_password' %}" class="auth-link">Change email</a>
+            </div>
+            {% endif %}
+
+            <!-- Resend OTP -->
+            <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                <p style="color: #64748b; font-size: 14px; margin-bottom: 10px;">Didn't receive the OTP?</p>
+                <form action="{% url 'resend_otp' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <input type="hidden" name="purpose" value="{{ purpose }}">
+                    <button type="submit" class="auth-link" style="background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--accent-green);">
+                        <i class="fa-solid fa-rotate-right"></i> Resend OTP
+                    </button>
+                </form>
+            </div>
+
+            <!-- Timer hint -->
+            <p style="text-align: center; font-size: 12px; color: #94a3b8; margin-top: 12px;">
+                <i class="fa-solid fa-clock"></i> OTP expires in 10 minutes
+            </p>
+        </div>
+    </div>
+{% endblock %}

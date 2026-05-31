@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Wah Cantt Coaster Tour</title>
+    
+    <!-- CSS links -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css?v=1.8">
+    <link rel="stylesheet" href="/css/pages-public.css?v=2.0">
+    <link rel="stylesheet" href="/css/dashboard-ui.css?v=1.8">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo text-white">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="logo-text">
+                    Wah Cantt
+                    <span class="logo-subtitle">Coaster Tour</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/beautiful_places.html" class="nav-link">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link">Booking</a>
+                <a href="/about.html" class="nav-link">About Us</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="tel:+923000000000" class="contact-phone">
+                    <i class="fa-solid fa-phone text-green"></i>
+                    <span>+92-300-0000000</span>
+                </a>
+                <a href="/login.html" class="btn-auth">
+                    <i class="fa-solid fa-user"></i> Login / Signup
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="home-page">
+        <!-- Hero -->
+        <section class="home-simple-hero" style="background-image: url('/images/hero_bg.png');">
+            <div class="home-simple-hero-overlay"></div>
+            <div class="container home-simple-hero-inner">
+                <p class="home-simple-label"><i class="fa-solid fa-bus"></i> Wah Cantt Coaster Tour</p>
+                <h1>Explore beautiful places.<br><span>Book your ride.</span></h1>
+                <p class="home-simple-lead">Comfortable coasters to Wah Gardens, Taxila, Khanpur Dam & more — easy online booking.</p>
+                <div class="home-simple-actions">
+                    <a href="/booking.html" class="home-btn home-btn-primary">Book a Tour</a>
+                    <a href="/beautiful_places.html" class="home-btn home-btn-ghost">View Places</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick book -->
+        <section class="home-simple-book">
+            <div class="container">
+                <form action="/booking.html" method="GET" class="home-book-form">
+                    <div class="home-book-field">
+                        <label for="homeTour">Where to go?</label>
+                        <select name="tour_id" id="homeTour" class="home-book-input">
+                            <option value="">Choose destination</option>
+                            <option value="1">Wah Gardens</option>
+                            <option value="2">Taxila</option>
+                            <option value="3">Khanpur Dam</option>
+                            <option value="4">Hunza Valley</option>
+                        </select>
+                    </div>
+                    <div class="home-book-field">
+                        <label for="homeTravelDate">When?</label>
+                        <input type="date" name="date" id="homeTravelDate" class="home-book-input">
+                    </div>
+                    <div class="home-book-field home-book-field-sm">
+                        <label for="homeSeats">Seats</label>
+                        <select name="seats" id="homeSeats" class="home-book-input">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5+</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="home-btn home-btn-primary">Search Tours</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Featured Places -->
+        <section class="home-featured-places">
+            <div class="container">
+                <h2>Featured Destinations</h2>
+                <div class="places-grid">
+                    <div class="place-card">
+                        <img src="/images/tours/wah-gardens.jpg" alt="Wah Gardens" class="place-image">
+                        <h3>Wah Gardens</h3>
+                        <p class="place-meta">5 km away • 2 hours</p>
+                        <p class="place-description">Beautiful Mughal gardens with scenic views.</p>
+                        <a href="/booking.html" class="place-link">Book Now</a>
+                    </div>
+                    <div class="place-card">
+                        <img src="/images/tours/taxila.jpg" alt="Taxila" class="place-image">
+                        <h3>Taxila</h3>
+                        <p class="place-meta">20 km away • 3 hours</p>
+                        <p class="place-description">Ancient historical site and UNESCO World Heritage Site.</p>
+                        <a href="/booking.html" class="place-link">Book Now</a>
+                    </div>
+                    <div class="place-card">
+                        <img src="/images/tours/khanpur.jpg" alt="Khanpur Dam" class="place-image">
+                        <h3>Khanpur Dam</h3>
+                        <p class="place-meta">30 km away • 4 hours</p>
+                        <p class="place-description">Scenic mountain views and water sports activities.</p>
+                        <a href="/booking.html" class="place-link">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col-about">
+                    <a href="/" class="logo text-white footer-logo">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-bus"></i>
+                        </div>
+                        <div class="logo-text">
+                            Wah Cantt
+                            <span class="logo-subtitle">Coaster Tour</span>
+                        </div>
+                    </a>
+                    <p style="margin-top: 15px; max-width: 400px; font-size: 15px; color: var(--text-slate);">
+                        We provide safe, affordable, and comfortable tourism and coaster booking services in Wah Cantt and neighboring scenic regions. Enjoy premium travel packages with verified drivers.
+                    </p>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Beautiful Places</a></li>
+                        <li><a href="/booking.html">Book a Tour</a></li>
+                        <li><a href="/about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links" style="color: var(--text-slate);">
+                        <li style="display: flex; gap: 10px; align-items: flex-start;">
+                            <i class="fa-solid fa-location-dot text-green" style="margin-top: 5px;"></i>
+                            <span>Main GT Road, Near POF Barrier 1, Wah Cantt, Punjab</span>
+                        </li>
+                        <li style="display: flex; gap: 10px; align-items: center;">
+                            <i class="fa-solid fa-phone text-green"></i>
+                            <span><strong>Booking:</strong> 0334-1944963 / 0313-9071373</span>
+                        </li>
+                        <li style="display: flex; gap: 10px; align-items: center;">
+                            <i class="fa-solid fa-envelope text-green"></i>
+                            <span>info@wahcanttcoasters.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wah Cantt Coaster Tour. All rights reserved.</p>
+                <p>Designed with <i class="fa-solid fa-heart text-orange"></i> for Wah Cantt Tourism</p>
+            </div>
+        </div>
+    </footer>
+
+    <script defer src="/js/main.js?v=1.7"></script>
+    <script>
+        // Ensure CSS stays loaded when switching tabs
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                links.forEach(link => {
+                    const href = link.href;
+                    link.href = href.split('?')[0] + '?v=' + Date.now();
+                });
+            }
+        });
+
+        function setActiveNav() {
+            const currentPage = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === currentPage || (href === '/' && (currentPage === '/' || currentPage === '/index.html'))) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('load', setActiveNav);
+        document.addEventListener('DOMContentLoaded', setActiveNav);
+    </script>
+</body>
+</html>
+                    </select>
+                </div>
+                <button type="submit" class="home-btn home-btn-primary home-book-submit">
+                    Search <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Popular places -->
+    <section class="home-simple-places">
+        <div class="container">
+            <div class="home-simple-head">
+                <h2>Popular destinations</h2>
+                <a href="{% url 'beautiful_places' %}" class="home-link-all">See all <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="home-places-grid">
+                {% for tour in featured_tours|slice:":6" %}
+                    <a href="{% url 'booking' %}?tour_id={{ tour.id }}" class="home-place-card">
+                        <div class="home-place-img">
+                            <img src="{% static tour.image %}" alt="{{ tour.name }}" loading="lazy">
+                            <span class="home-place-tag">{{ tour.category }}</span>
+                        </div>
+                        <div class="home-place-body">
+                            <h3>{{ tour.name }}</h3>
+                            <p class="home-place-loc"><i class="fa-solid fa-location-dot"></i> {{ tour.location }}</p>
+                            <p class="home-place-price">PKR {{ tour.price_per_seat|floatformat:0 }} <span>/ seat</span></p>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p class="home-empty">No tours available yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="home-simple-trust">
+        <div class="container home-trust-row">
+            <div class="home-trust-item">
+                <i class="fa-solid fa-bus"></i>
+                <span>Comfortable coasters</span>
+            </div>
+            <div class="home-trust-item">
+                <i class="fa-solid fa-tag"></i>
+                <span>Clear pricing</span>
+            </div>
+            <div class="home-trust-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Safe &amp; reliable</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="home-simple-reviews">
+        <div class="container">
+            <h2 class="home-simple-head-center">What travellers say</h2>
+            <div class="home-reviews-row" id="reviewCards">
+                <div class="home-review-card">
+                    <div class="home-review-stars">★★★★★</div>
+                    <p>Excellent tour — comfortable coaster and very helpful service.</p>
+                    <span>— Happy customer</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="home-simple-cta">
+        <div class="container">
+            <h2>Ready for your trip?</h2>
+            <a href="{% url 'booking' %}" class="home-btn home-btn-dark">Book now</a>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('homeTravelDate');
+        if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+    });
+</script>
+{% endblock %}

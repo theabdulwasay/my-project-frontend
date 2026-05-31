@@ -1,0 +1,14 @@
+{
+  "name": "wah-coaster-frontend",
+  "version": "1.0.0",
+  "description": "Wah Cantt Coaster Tour - Frontend",
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "npx http-server . -p 3000 -c-1",
+    "build": "echo 'Static site - no build needed'",
+    "start": "npx http-server . -p $PORT"
+  }
+}

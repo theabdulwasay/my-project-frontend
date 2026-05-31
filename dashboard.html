@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Wah Cantt Coaster Tour</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.6">
+    <link rel="stylesheet" href="{% static 'css/dashboard-ui.css' %}?v=4.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="dash-ui-page">
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <a href="{% url 'home' %}" class="sidebar-brand">
+                <i class="fa-solid fa-bus"></i>
+                <span>WCT Tour</span>
+            </a>
+
+            <div class="sidebar-utilities">
+                <button type="button" class="sidebar-util-btn" title="Reservations" onclick="document.getElementById('link-bookings').click();">
+                    <i class="fa-regular fa-calendar"></i>
+                    {% if today_booking_count %}<span class="badge-dot"></span>{% endif %}
+                </button>
+                <button type="button" class="sidebar-util-btn" title="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+                <a href="{% url 'beautiful_places' %}" class="sidebar-util-btn" title="Explore places">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
+                <button type="button" class="sidebar-util-btn" title="Settings" onclick="document.getElementById('link-profile').click();">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu" aria-label="Dashboard navigation">
+                <a href="#overview" class="sidebar-link active" id="link-overview">
+                    <i class="fa-solid fa-chart-pie"></i> Overview
+                </a>
+                <a href="{% url 'beautiful_places' %}" class="sidebar-link">
+                    <i class="fa-solid fa-location-dot"></i> Places
+                </a>
+                <a href="#overview" class="sidebar-link" id="link-tours">
+                    <i class="fa-solid fa-map"></i> Tours
+                </a>
+                <a href="{% url 'booking' %}" class="sidebar-link">
+                    <i class="fa-solid fa-ticket"></i> Book Tour
+                </a>
+                <a href="#bookings" class="sidebar-link" id="link-bookings">
+                    <i class="fa-solid fa-calendar-check"></i> Reservations
+                </a>
+                <a href="#profile" class="sidebar-link" id="link-profile">
+                    <i class="fa-solid fa-user-gear"></i> Settings
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="{% url 'logout' %}" class="sidebar-link">
+                    <i class="fa-solid fa-power-off"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="dash-main-inner">
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="dash-alert {% if message.tags == 'error' %}dash-alert-error{% else %}dash-alert-warning{% endif %}">
+                            <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %}"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- ========== OVERVIEW ========== -->
+                <div id="section-overview" class="dashboard-section">
+
+                    <div class="dash-hero dash-fade-in">
+                        <div>
+                            <span class="dash-hero-badge"><i class="fa-solid fa-circle" style="font-size:6px;"></i> Customer Portal</span>
+                            <h1>Welcome back, {{ user.first_name|default:"Traveler" }}!</h1>
+                            <p>Plan your next Wah Cantt adventure — book coasters, track trips, and share reviews.</p>
+                        </div>
+                        <div class="dash-hero-icon"><i class="fa-solid fa-bus"></i></div>
+                    </div>
+
+                    <header class="dash-topbar dash-fade-in dash-fade-in-delay-1">
+                        <div class="dash-topbar-actions" style="width:100%; justify-content:flex-end;">
+                            <a href="{% url 'booking' %}" class="dash-btn-primary">
+                                <i class="fa-solid fa-plus"></i> New Booking
+                            </a>
+                            <div class="dash-user-chip">
+                                <div class="avatar">{{ user.first_name|slice:":1"|default:user.email|slice:":1"|upper }}</div>
+                                <div class="meta">
+                                    <strong>{{ user.first_name|default:user.email }}</strong>
+                                    <span>{{ user.email }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="dash-quick-actions dash-fade-in dash-fade-in-delay-1">
+                        <a href="{% url 'booking' %}" class="dash-quick-pill"><i class="fa-solid fa-ticket"></i> Book Tour</a>
+                        <a href="#bookings" class="dash-quick-pill" id="quickReservations"><i class="fa-solid fa-calendar"></i> My Trips</a>
+                        <a href="{% url 'beautiful_places' %}" class="dash-quick-pill"><i class="fa-solid fa-map"></i> Explore Places</a>
+                        <a href="#profile" class="dash-quick-pill" id="quickSettings"><i class="fa-solid fa-user"></i> Profile</a>
+                    </div>
+
+                    {% if today_booking_count %}
+                        <div class="dash-alert dash-alert-warning">
+                            <i class="fa-solid fa-bell"></i>
+                            <span>You have <strong>{{ today_booking_count }}</strong> trip{% if today_booking_count != 1 %}s{% endif %} scheduled for today. Please be ready at your pickup point.</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="stats-row dash-fade-in dash-fade-in-delay-2">
+                        <div class="stat-card">
+                            <div class="stat-card-info"><h4>Total Bookings</h4><h2>{{ total_bookings }}</h2></div>
+                            <div class="stat-card-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-info"><h4>Upcoming Trips</h4><h2>{{ upcoming_trips }}</h2></div>
+                            <div class="stat-card-icon"><i class="fa-solid fa-clock"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-info"><h4>Completed</h4><h2>{{ completed_trips }}</h2></div>
+                            <div class="stat-card-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-info"><h4>Total Spent</h4><h2>PKR {{ total_spent|floatformat:0 }}</h2></div>
+                            <div class="stat-card-icon"><i class="fa-solid fa-wallet"></i></div>
+                        </div>
+                    </div>
+
+                    <section class="dash-block dash-fade-in dash-fade-in-delay-3">
+                        <div class="dash-section-head">
+                            <div>
+                                <p class="dash-section-tag">Discover</p>
+                                <h2>Trending Tours</h2>
+                                <p class="sub">Popular destinations in Wah Cantt</p>
+                            </div>
+                            <div class="dash-carousel-nav">
+                                <button type="button" id="trendPrev" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+                                <button type="button" id="trendNext" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="dash-trending-track" id="trendingTrack">
+                            {% for tour in featured_tours %}
+                                <article class="dash-trend-card">
+                                    <img src="{% static tour.image %}" alt="{{ tour.name }}" loading="lazy">
+                                    <div class="dash-trend-info">
+                                        <h3>{{ tour.name }}</h3>
+                                        <p class="dash-trend-price">PKR {{ tour.price_per_seat|floatformat:0 }} <span style="font-weight:400;opacity:0.8;">/ seat</span></p>
+                                        <div class="dash-stars" aria-hidden="true">★★★★★</div>
+                                        <p class="dash-trend-desc">{{ tour.description|truncatewords:14 }}</p>
+                                        <a href="{% url 'booking' %}?tour_id={{ tour.id }}" class="dash-book-link">
+                                            Book now <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </article>
+                            {% empty %}
+                                <div class="dash-empty" style="flex:1;">
+                                    <i class="fa-solid fa-map"></i>
+                                    <p>No tours available right now.</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+                    <div class="dash-content-grid">
+                        <div class="dash-card">
+                            <h3 class="dash-card-title">
+                                My Reservations
+                                <a href="#bookings" id="viewAllBookings">View all</a>
+                            </h3>
+                            <div class="dash-booking-list">
+                                {% for booking in bookings|slice:":10" %}
+                                    <div class="dash-booking-item">
+                                        <img class="dash-booking-thumb" src="{% static booking.tour.image %}" alt="">
+                                        <div class="dash-booking-meta">
+                                            <h4>{{ booking.tour.name }}</h4>
+                                            <p><i class="fa-solid fa-location-dot"></i> {{ booking.pickup_location }}</p>
+                                            <span class="dash-booking-status badge {% if booking.status == 'Pending' %}badge-pending{% elif booking.status == 'Confirmed' %}badge-confirmed{% else %}badge-cancelled{% endif %}">{{ booking.status }}</span>
+                                        </div>
+                                        <span class="dash-booking-price">PKR {{ booking.total_price|floatformat:0 }}</span>
+                                    </div>
+                                {% empty %}
+                                    <div class="dash-empty">
+                                        <i class="fa-solid fa-calendar-xmark"></i>
+                                        <p>No reservations yet.<br><a href="{% url 'booking' %}">Book your first tour</a></p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="dash-right-stack">
+                            <div class="dash-card">
+                                <h3 class="dash-card-title">Booking Analytics</h3>
+                                <div class="dash-analytics-inner">
+                                    <div class="dash-chart-wrap">
+                                        <canvas id="bookingChart"></canvas>
+                                        <div class="dash-chart-center" id="chartCenterLabel">
+                                            <strong id="chartTotal">{{ total_bookings }}</strong>
+                                            <span>Total</span>
+                                        </div>
+                                    </div>
+                                    <div class="dash-chart-legend">
+                                        <span class="dash-legend-item"><span class="dash-legend-dot" style="background:#5dade2;"></span> Pending</span>
+                                        <span class="dash-legend-item"><span class="dash-legend-dot" style="background:#e67e22;"></span> Confirmed</span>
+                                        <span class="dash-legend-item"><span class="dash-legend-dot" style="background:#9b59b6;"></span> Upcoming</span>
+                                        <span class="dash-legend-item"><span class="dash-legend-dot" style="background:#1abc9c;"></span> Cancelled</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-card">
+                                <h3 class="dash-card-title">
+                                    Recent Reviews
+                                    <a href="#reviewSection">Write review</a>
+                                </h3>
+                                {% for review in recent_reviews|slice:":4" %}
+                                    <div class="dash-review-row">
+                                        <div class="dash-review-avatar">
+                                            {% if review.user %}{{ review.user.first_name|slice:":1"|default:review.user.email|slice:":1"|upper }}{% else %}G{% endif %}
+                                        </div>
+                                        <div class="dash-review-body">
+                                            <h4>{% if review.user %}{{ review.user.first_name|default:review.user.email }}{% else %}Guest{% endif %}</h4>
+                                            <p class="tour-name">{{ review.tour.name }}</p>
+                                            <div class="dash-stars" style="margin:0;">★★★★★</div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <div class="dash-empty" style="padding:20px;">
+                                        <p>No reviews yet. Share your experience below!</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-panel" id="reviewSection">
+                        <h3>Leave a Review</h3>
+                        <form id="reviewForm">
+                            <div class="dash-review-grid">
+                                <div class="form-group">
+                                    <label for="reviewTour">Select Tour</label>
+                                    <select id="reviewTour" class="form-control" required>
+                                        <option value="">Choose a tour</option>
+                                        {% for tour in tours %}
+                                            <option value="{{ tour.id }}">{{ tour.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reviewRating">Rating</label>
+                                    <select id="reviewRating" class="form-control" required>
+                                        <option value="5">★★★★★ Excellent (5)</option>
+                                        <option value="4">★★★★☆ Good (4)</option>
+                                        <option value="3">★★★☆☆ Average (3)</option>
+                                        <option value="2">★★☆☆☆ Fair (2)</option>
+                                        <option value="1">★☆☆☆☆ Poor (1)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="grid-column:1/-1;">
+                                    <label for="reviewComment">Your Review</label>
+                                    <textarea id="reviewComment" class="form-control" rows="3" placeholder="Tell others about your trip experience..." required></textarea>
+                                </div>
+                            </div>
+                            <div id="reviewFeedback" class="review-feedback" style="display:none;margin-bottom:12px;"></div>
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ========== RESERVATIONS ========== -->
+                <div id="section-bookings" class="dashboard-section" style="display:none;">
+                    <header class="dash-page-header">
+                        <h1>My Reservations</h1>
+                        <p>Full history of your coaster tour bookings</p>
+                    </header>
+
+                    <div class="dash-topbar-actions" style="margin-bottom:24px;">
+                        <a href="{% url 'booking' %}" class="dash-btn-primary"><i class="fa-solid fa-plus"></i> New Booking</a>
+                    </div>
+
+                    <div class="dash-panel table-card">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tour</th>
+                                        <th>Travel Date</th>
+                                        <th>Seats</th>
+                                        <th>Amount</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in bookings %}
+                                        <tr>
+                                            <td><strong>#WCT-{{ booking.id }}</strong></td>
+                                            <td>
+                                                <div style="display:flex;align-items:center;gap:12px;">
+                                                    <img src="{% static booking.tour.image %}" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover;">
+                                                    <div>
+                                                        <div style="font-weight:600;">{{ booking.tour.name }}</div>
+                                                        <div style="font-size:12px;color:var(--dash-muted);">{{ booking.pickup_location }}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ booking.date|date:"d M Y" }}</td>
+                                            <td>{{ booking.seats }}</td>
+                                            <td><strong>PKR {{ booking.total_price|floatformat:0 }}</strong></td>
+                                            <td>{{ booking.payment_method }}</td>
+                                            <td>
+                                                <span class="badge {% if booking.status == 'Pending' %}badge-pending{% elif booking.status == 'Confirmed' %}badge-confirmed{% else %}badge-cancelled{% endif %}">{{ booking.status }}</span>
+                                            </td>
+                                            <td>
+                                                {% if booking.status == 'Pending' %}
+                                                    <form action="{% url 'cancel_booking' booking.id %}" method="POST" onsubmit="return confirm('Cancel this booking?');" style="display:inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn-sm btn-danger-sm"><i class="fa-solid fa-xmark"></i> Cancel</button>
+                                                    </form>
+                                                {% else %}
+                                                    <a href="{% url 'booking' %}?tour_id={{ booking.tour.id }}" class="btn-sm btn-success-sm"><i class="fa-solid fa-repeat"></i> Rebook</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="8">
+                                                <div class="dash-empty">
+                                                    <i class="fa-solid fa-ticket"></i>
+                                                    <p>No bookings found. <a href="{% url 'booking' %}">Book a tour</a></p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== PROFILE ========== -->
+                <div id="section-profile" class="dashboard-section" style="display:none;">
+                    <header class="dash-page-header">
+                        <h1>Account Settings</h1>
+                        <p>Update your profile and password</p>
+                    </header>
+
+                    <div class="dash-panel" style="max-width:720px;">
+                        <form action="{% url 'update_profile' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="dash-profile-grid">
+                                <div class="form-group">
+                                    <label for="profile_name">Full Name</label>
+                                    <input type="text" name="name" id="profile_name" class="form-control" value="{{ user.first_name }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile_phone">Phone Number</label>
+                                    <input type="tel" name="phone" id="profile_phone" class="form-control" value="{{ user.phone }}" required>
+                                </div>
+                                <div class="form-group" style="grid-column:1/-1;">
+                                    <label for="profile_email">Email Address</label>
+                                    <input type="email" id="profile_email" class="form-control" value="{{ user.email }}" readonly>
+                                </div>
+                                <div class="form-group" style="grid-column:1/-1;">
+                                    <label for="profile_password">New Password</label>
+                                    <input type="password" name="password" id="profile_password" class="form-control" placeholder="Leave blank to keep current password">
+                                </div>
+                                <div class="dash-profile-actions">
+                                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.getElementById('trendingTrack');
+            document.getElementById('trendPrev')?.addEventListener('click', () => track?.scrollBy({ left: -290, behavior: 'smooth' }));
+            document.getElementById('trendNext')?.addEventListener('click', () => track?.scrollBy({ left: 290, behavior: 'smooth' }));
+
+            document.getElementById('viewAllBookings')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('link-bookings')?.click();
+            });
+            document.getElementById('quickReservations')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('link-bookings')?.click();
+            });
+            document.getElementById('quickSettings')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('link-profile')?.click();
+            });
+
+            const chartEl = document.getElementById('bookingChart');
+            if (chartEl && typeof Chart !== 'undefined') {
+                const values = [
+                    {{ chart_pending|default:0 }},
+                    {{ chart_confirmed|default:0 }},
+                    {{ chart_upcoming|default:0 }},
+                    {{ chart_cancelled|default:0 }}
+                ];
+                const total = values.reduce((a, b) => a + b, 0);
+                new Chart(chartEl, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pending', 'Confirmed', 'Upcoming', 'Cancelled'],
+                        datasets: [{
+                            data: total > 0 ? values : [1, 1, 1, 1],
+                            backgroundColor: ['#5dade2', '#e67e22', '#9b59b6', '#1abc9c'],
+                            borderWidth: 0,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        cutout: '62%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#252a35',
+                                titleColor: '#fff',
+                                bodyColor: '#8b93a7',
+                                borderColor: 'rgba(255,255,255,0.1)',
+                                borderWidth: 1,
+                                padding: 12,
+                                cornerRadius: 8
+                            }
+                        },
+                        maintainAspectRatio: true
+                    }
+                });
+            }
+
+            const navLinks = {
+                overview: document.getElementById('link-overview'),
+                bookings: document.getElementById('link-bookings'),
+                profile: document.getElementById('link-profile'),
+                tours: document.getElementById('link-tours')
+            };
+            const sections = {
+                overview: document.getElementById('section-overview'),
+                bookings: document.getElementById('section-bookings'),
+                profile: document.getElementById('section-profile')
+            };
+
+            function setActiveNav(key) {
+                document.querySelectorAll('.dash-ui-page .sidebar-menu .sidebar-link').forEach(link => {
+                    const id = link.id;
+                    if (id && (id === 'link-' + key)) {
+                        link.classList.add('active');
+                    } else if (id && id.startsWith('link-')) {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+            function showSection(key) {
+                Object.keys(sections).forEach(k => {
+                    if (sections[k]) sections[k].style.display = 'none';
+                });
+                if (sections[key]) {
+                    sections[key].style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                setActiveNav(key);
+            }
+
+            navLinks.overview?.addEventListener('click', e => { e.preventDefault(); showSection('overview'); });
+            navLinks.bookings?.addEventListener('click', e => { e.preventDefault(); showSection('bookings'); });
+            navLinks.profile?.addEventListener('click', e => { e.preventDefault(); showSection('profile'); });
+            navLinks.tours?.addEventListener('click', e => {
+                e.preventDefault();
+                showSection('overview');
+                track?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+
+            const hash = window.location.hash.replace('#', '');
+            if (hash && sections[hash]) {
+                showSection(hash);
+            } else {
+                showSection('overview');
+            }
+        });
+    </script>
+    <script defer src="{% static 'js/main.js' %}?v=1.3"></script>
+</body>
+</html>

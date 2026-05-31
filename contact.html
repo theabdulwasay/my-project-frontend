@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Wah Cantt Coaster Tour</title>
+    
+    <!-- CSS links -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css?v=1.8">
+    <link rel="stylesheet" href="/css/pages-public.css?v=2.0">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo text-white">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="logo-text">
+                    Wah Cantt
+                    <span class="logo-subtitle">Coaster Tour</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/beautiful_places.html" class="nav-link">Beautiful Places</a>
+                <a href="/booking.html" class="nav-link">Booking</a>
+                <a href="/about.html" class="nav-link">About Us</a>
+                <a href="/contact.html" class="nav-link active">Contact</a>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="tel:+923000000000" class="contact-phone">
+                    <i class="fa-solid fa-phone text-green"></i>
+                    <span>+92-300-0000000</span>
+                </a>
+                <a href="/login.html" class="btn-auth">
+                    <i class="fa-solid fa-user"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%); color: white; padding: 100px 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: 2.5em; margin-bottom: 20px;"><i class="fa-solid fa-headset"></i> Get In Touch</h1>
+                <p style="font-size: 1.2em; opacity: 0.9;">Have questions? We'd love to hear from you.</p>
+            </div>
+        </section>
+
+        <!-- Contact Info Cards -->
+        <section style="padding: 60px 0; background: var(--bg-light);">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px;">
+                    <!-- Location Card -->
+                    <div style="background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: rgba(46, 204, 113, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fa-solid fa-location-dot" style="font-size: 1.8em; color: var(--accent-green);"></i>
+                        </div>
+                        <h3 style="font-size: 1.3em; margin-bottom: 12px; color: var(--text-dark);">Visit Us</h3>
+                        <p style="color: var(--text-slate);">Main GT Road<br>Near POF Barrier 1<br>Wah Cantt, Punjab</p>
+                    </div>
+
+                    <!-- Phone Card -->
+                    <div style="background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: rgba(255, 122, 0, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fa-solid fa-phone" style="font-size: 1.8em; color: var(--accent-orange);"></i>
+                        </div>
+                        <h3 style="font-size: 1.3em; margin-bottom: 12px; color: var(--text-dark);">Call Us</h3>
+                        <p style="color: var(--accent-green); font-weight: 600; font-size: 1.1em;">0334-1944963</p>
+                        <p style="color: var(--text-slate);">0313-9071373</p>
+                    </div>
+
+                    <!-- Email Card -->
+                    <div style="background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: rgba(46, 204, 113, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fa-solid fa-envelope" style="font-size: 1.8em; color: var(--accent-green);"></i>
+                        </div>
+                        <h3 style="font-size: 1.3em; margin-bottom: 12px; color: var(--text-dark);">Email</h3>
+                        <p style="color: var(--text-slate);">info@wahcanttcoasters.com</p>
+                        <p style="color: var(--text-slate); font-size: 0.9em;">We reply within 24 hours</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div style="max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--card-shadow);">
+                    <h2 style="font-size: 1.8em; margin-bottom: 30px; color: var(--text-dark);">Send us a Message</h2>
+                    
+                    <form onsubmit="handleContact(event)">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Full Name</label>
+                            <input type="text" name="name" placeholder="Your name" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Email</label>
+                            <input type="email" name="email" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Phone</label>
+                            <input type="tel" name="phone" placeholder="0300-0000000" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Subject</label>
+                            <input type="text" name="subject" placeholder="What is this about?" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em;" required>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark);">Message</label>
+                            <textarea name="message" placeholder="Your message..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: var(--border-radius); font-size: 1em; resize: vertical; min-height: 120px;" required></textarea>
+                        </div>
+
+                        <button type="submit" class="home-btn home-btn-primary" style="width: 100%; padding: 14px; font-size: 1.1em;">
+                            <i class="fa-solid fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col-about">
+                    <a href="/" class="logo text-white footer-logo">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-bus"></i>
+                        </div>
+                        <div class="logo-text">
+                            Wah Cantt
+                            <span class="logo-subtitle">Coaster Tour</span>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/beautiful_places.html">Places</a></li>
+                        <li><a href="/booking.html">Book</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <ul class="footer-links" style="color: var(--text-slate);">
+                        <li><i class="fa-solid fa-phone text-green"></i> 0334-1944963</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wah Cantt Coaster Tour.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script defer src="/js/main.js?v=1.7"></script>
+    <script>
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                links.forEach(link => {
+                    link.href = link.href.split('?')[0] + '?v=' + Date.now();
+                });
+            }
+        });
+
+        function handleContact(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will contact you soon.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
+                    <div class="strip-icon si-blue"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="strip-text">
+                        <span class="strip-label">Email Us</span>
+                        <span class="strip-value">info@wahcanttcoasters.com</span>
+                    </div>
+                </div>
+                <div class="strip-divider"></div>
+                <div class="strip-item">
+                    <div class="strip-icon si-purple"><i class="fa-solid fa-clock"></i></div>
+                    <div class="strip-text">
+                        <span class="strip-label">Working Hours</span>
+                        <span class="strip-value">24/7 Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="contact-two-col">
+
+                <!-- Left: Form Card -->
+                <div class="contact-form-card">
+                    <div class="cfc-header">
+                        <div class="cfc-icon-circle">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </div>
+                        <div>
+                            <h2>Send Us a Message</h2>
+                            <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+                        </div>
+                    </div>
+
+                    <form action="{% url 'contact_message' %}" method="POST" class="contact-form-v2" id="contactFormV2">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+
+                        <div class="cf-row">
+                            <div class="cf-group">
+                                <label for="cf_name"><i class="fa-solid fa-user"></i> Your Name</label>
+                                <input type="text" name="name" id="cf_name" value="{{ user.first_name|default:'' }}" placeholder="e.g. Muhammad Ali" required>
+                            </div>
+                            <div class="cf-group">
+                                <label for="cf_email"><i class="fa-solid fa-at"></i> Email Address</label>
+                                <input type="email" name="email" id="cf_email" value="{{ user.email|default:'' }}" placeholder="you@example.com" required>
+                            </div>
+                        </div>
+
+                        <div class="cf-group">
+                            <label for="cf_subject"><i class="fa-solid fa-tag"></i> Subject</label>
+                            <input type="text" name="subject" id="cf_subject" placeholder="What is this regarding?" required>
+                        </div>
+
+                        <div class="cf-group">
+                            <label for="cf_message"><i class="fa-solid fa-comment-dots"></i> Your Message</label>
+                            <textarea name="message" id="cf_message" rows="5" placeholder="Write your message in detail..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="cf-submit-btn" id="cfSubmitBtn">
+                            <span class="cf-btn-text">Send Message</span>
+                            <span class="cf-btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right: Map + Extra Info -->
+                <div class="contact-right-col">
+                    <!-- Map Card -->
+                    <div class="contact-map-card">
+                        <div class="map-card-header">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <h3>Find Us on Map</h3>
+                        </div>
+                        <div class="map-embed-wrapper">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26569.20925985!2d72.7100!3d33.7700!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfb01e8cef0e4d%3A0x19f8b5e0c3a00000!2sWah%20Cantt!5e0!3m2!1sen!2spk!4v1700000000000!5m2!1sen!2spk"
+                                width="100%"
+                                height="280"
+                                style="border:0; border-radius: 12px;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Social / CTA Card -->
+                    <div class="contact-social-card">
+                        <h3>Connect With Us</h3>
+                        <p>Follow us on social media for latest tour updates, discounts, and travel tips.</p>
+                        <div class="social-icons-row">
+                            <a href="#" class="social-icon-btn si-fb" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon-btn si-ig" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="social-icon-btn si-wa" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="#" class="social-icon-btn si-yt" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
