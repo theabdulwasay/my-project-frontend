@@ -1,6 +1,6 @@
 {
-  "buildCommand": "echo 'Static deployment'",
-  "outputDirectory": "frontend",
+  "buildCommand": "bash build.sh",
+  "outputDirectory": "public",
   "headers": [
     {
       "source": "/(.*)",
