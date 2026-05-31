@@ -9,6 +9,6 @@
     "start": "npx http-server . -p $PORT"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   }
 }
