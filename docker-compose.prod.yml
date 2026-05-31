@@ -1,0 +1,14 @@
+# Production overrides — use with:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+
+services:
+  db:
+    ports: []  # do not expose MySQL publicly
+
+  web:
+    environment:
+      DEBUG: "False"
+      SEED_ON_START: "false"
+    # Bind only on host loopback; put Nginx/Caddy in front for HTTPS
+    ports:
+      - "127.0.0.1:8000:8000"

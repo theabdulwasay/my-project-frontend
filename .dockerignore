@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+*.pyc
+__pycache__
+*.pyo
+*.log
+.vscode
+.cursor
+terminals
+agent-transcripts
+*.md
+!README.md
+database/*.sql
+RUN.bat
+automate_backend.bat
+setup_email.py
